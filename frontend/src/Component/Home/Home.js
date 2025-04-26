@@ -155,7 +155,7 @@ function Home() {
         <nav style={styles.nav}>
           <div style={styles.logo}>Taste<span style={styles.logoSpan}>Share</span></div>
           <div style={styles.navLinks}>
-            <a href="/recipes" style={styles.navLink}>Recipes</a>
+            <a href="/recipe" style={styles.navLink}>Recipes</a>
             <a href="/challenge" style={styles.navLink}>Challenges</a>
             <a href="/plan" style={styles.navLink}>Meal Plans</a>
             <a href="/community" style={styles.navLink}>Community</a>
