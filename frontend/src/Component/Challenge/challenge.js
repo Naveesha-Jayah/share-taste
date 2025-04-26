@@ -94,283 +94,12 @@ const ChallengeForm = () => {
   };
 
   return (
-    <div className="challenge-container">
-      <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        .challenge-container {
-          display: flex;
-          gap: 30px;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 30px 20px;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          background-color: #f8fafc;
-          min-height: 100vh;
-        }
-
-        .challenge-form {
-          flex: 0 0 380px;
-          background: white;
-          border-radius: 16px;
-          padding: 25px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-          position: sticky;
-          top: 30px;
-          height: fit-content;
-          border: 1px solid #e2e8f0;
-        }
-
-        .challenges-list {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 25px;
-        }
-
-        h2 {
-          color: #1e293b;
-          font-size: 24px;
-          font-weight: 700;
-          margin-bottom: 25px;
-          padding-bottom: 15px;
-          border-bottom: 1px solid #e2e8f0;
-        }
-
-        .form-group {
-          margin-bottom: 25px;
-        }
-
-        label {
-          display: block;
-          margin-bottom: 10px;
-          font-weight: 600;
-          color: #334155;
-          font-size: 14px;
-        }
-
-        input, textarea, select {
-          width: 100%;
-          padding: 12px 15px;
-          border: 1px solid #cbd5e1;
-          border-radius: 10px;
-          font-size: 15px;
-          background-color: #fff;
-          transition: all 0.2s;
-          color: #334155;
-        }
-
-        input:focus, textarea:focus, select:focus {
-          border-color: #6366f1;
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        textarea {
-          min-height: 120px;
-          resize: vertical;
-          line-height: 1.5;
-        }
-
-        .form-actions {
-          display: flex;
-          gap: 12px;
-          margin-top: 30px;
-        }
-
-        button {
-          padding: 12px 20px;
-          border: none;
-          border-radius: 10px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s;
-          font-size: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .submit-btn {
-          background-color: #6366f1;
-          color: white;
-          flex: 1;
-        }
-
-        .submit-btn:hover {
-          background-color: #4f46e5;
-          transform: translateY(-1px);
-        }
-
-        .cancel-btn {
-          background-color: #f1f5f9;
-          color: #64748b;
-        }
-
-        .cancel-btn:hover {
-          background-color: #e2e8f0;
-          transform: translateY(-1px);
-        }
-
-        .challenge-item {
-          background: white;
-          border-radius: 16px;
-          padding: 25px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-          transition: all 0.2s;
-          border: 1px solid #e2e8f0;
-        }
-
-        .challenge-item:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .challenge-item h3 {
-          margin: 0 0 15px 0;
-          color: #1e293b;
-          font-size: 20px;
-          font-weight: 700;
-        }
-
-        .challenge-item p {
-          margin: 10px 0;
-          color: #475569;
-          font-size: 15px;
-          line-height: 1.6;
-        }
-
-        .challenge-actions {
-          display: flex;
-          gap: 12px;
-          margin-top: 25px;
-        }
-
-        .edit-btn {
-          background-color: #6366f1;
-          color: white;
-          padding: 10px 16px;
-        }
-
-        .edit-btn:hover {
-          background-color: #4f46e5;
-          transform: translateY(-1px);
-        }
-
-        .delete-btn {
-          background-color: #ef4444;
-          color: white;
-          padding: 10px 16px;
-        }
-
-        .delete-btn:hover {
-          background-color: #dc2626;
-          transform: translateY(-1px);
-        }
-
-        .challenge-meta {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 20px;
-          margin-bottom: 20px;
-        }
-
-        .meta-item {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          color: #64748b;
-          font-size: 14px;
-          font-weight: 500;
-        }
-
-        .meta-icon {
-          color: #6366f1;
-          font-size: 16px;
-        }
-
-        .challenge-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 20px;
-          flex-wrap: wrap;
-          gap: 15px;
-        }
-
-        .challenge-category {
-          background-color: #e0e7ff;
-          color: #4338ca;
-          padding: 6px 12px;
-          border-radius: 20px;
-          font-size: 13px;
-          font-weight: 600;
-          display: inline-flex;
-          align-items: center;
-        }
-
-        .challenge-difficulty {
-          background-color: #ede9fe;
-          color: #6d28d9;
-          padding: 6px 12px;
-          border-radius: 20px;
-          font-size: 13px;
-          font-weight: 600;
-          display: inline-flex;
-          align-items: center;
-        }
-
-        .date-range {
-          display: flex;
-          gap: 15px;
-          margin-top: 20px;
-        }
-
-        .date-group {
-          flex: 1;
-        }
-
-        .empty-state {
-          background: white;
-          border-radius: 16px;
-          padding: 40px 20px;
-          text-align: center;
-          border: 1px solid #e2e8f0;
-        }
-
-        .empty-state p {
-          color: #64748b;
-          margin-top: 15px;
-        }
-
-        .tag-container {
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-
-        @media (max-width: 768px) {
-          .challenge-container {
-            flex-direction: column;
-          }
-          
-          .challenge-form {
-            position: static;
-            flex: 1;
-          }
-          
-          .date-range {
-            flex-direction: column;
-            gap: 20px;
-          }
-        }
-      `}</style>
-
-      <div className="challenge-form">
-        <h2>{isEditing ? 'Edit Challenge' : 'Create New Challenge'}</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Title:</label>
+    <div style={styles.container}>
+      <div style={styles.challengeForm}>
+        <h2 style={styles.sectionTitle}>{isEditing ? 'Edit Challenge' : 'Create New Challenge'}</h2>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Title:</label>
             <input
               type="text"
               name="challengeTitle"
@@ -378,78 +107,86 @@ const ChallengeForm = () => {
               value={challenge.challengeTitle}
               onChange={handleChange}
               required
+              style={styles.input}
             />
           </div>
           
-          <div className="form-group">
-            <label>Description:</label>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Description:</label>
             <textarea
               name="challengeDescription"
               placeholder="Describe the challenge rules and benefits..."
               value={challenge.challengeDescription}
               onChange={handleChange}
               required
+              style={{...styles.input, minHeight: '120px'}}
             />
           </div>
           
-          <div className="form-group">
-            <label>Category:</label>
-            <select
-              name="category"
-              value={challenge.category}
-              onChange={handleChange}
-              required
-            >
-              {categories.map((category, index) => (
-                <option key={index} value={category}>{category}</option>
-              ))}
-            </select>
+          <div style={styles.formRow}>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Category:</label>
+              <select
+                name="category"
+                value={challenge.category}
+                onChange={handleChange}
+                required
+                style={styles.input}
+              >
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Difficulty:</label>
+              <select
+                name="difficulty"
+                value={challenge.difficulty}
+                onChange={handleChange}
+                required
+                style={styles.input}
+              >
+                {difficulties.map((difficulty, index) => (
+                  <option key={index} value={difficulty}>{difficulty}</option>
+                ))}
+              </select>
+            </div>
           </div>
           
-          <div className="form-group">
-            <label>Difficulty:</label>
-            <select
-              name="difficulty"
-              value={challenge.difficulty}
-              onChange={handleChange}
-              required
-            >
-              {difficulties.map((difficulty, index) => (
-                <option key={index} value={difficulty}>{difficulty}</option>
-              ))}
-            </select>
-          </div>
-          
-          <div className="date-range">
-            <div className="form-group date-group">
-              <label>Start Date:</label>
+          <div style={styles.formRow}>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Start Date:</label>
               <input
                 type="date"
                 name="startDate"
                 value={challenge.startDate}
                 onChange={handleChange}
                 required
+                style={styles.input}
               />
             </div>
             
-            <div className="form-group date-group">
-              <label>End Date:</label>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>End Date:</label>
               <input
                 type="date"
                 name="endDate"
                 value={challenge.endDate}
                 onChange={handleChange}
                 required
+                style={styles.input}
               />
             </div>
           </div>
           
-          <div className="form-actions">
-            <button type="submit" className="submit-btn">
+          <div style={styles.formActions}>
+            <button type="submit" style={styles.submitBtn}>
               {isEditing ? 'Update Challenge' : 'Create Challenge'}
             </button>
             {isEditing && (
-              <button type="button" className="cancel-btn" onClick={resetForm}>
+              <button type="button" style={styles.cancelBtn} onClick={resetForm}>
                 Cancel
               </button>
             )}
@@ -457,47 +194,50 @@ const ChallengeForm = () => {
         </form>
       </div>
 
-      <div className="challenges-list">
-        <h2>Current Challenges</h2>
+      <div style={styles.challengesList}>
+        <h2 style={styles.sectionTitle}>Current Challenges</h2>
         {challenges.length === 0 ? (
-          <div className="empty-state">
-            <h3>No challenges yet</h3>
-            <p>Create your first challenge to get started!</p>
+          <div style={styles.emptyState}>
+            <p>No challenges available. Create your first challenge!</p>
           </div>
         ) : (
           <div>
             {challenges.map((challenge) => (
-              <div key={challenge.id} className="challenge-item">
-                <div className="challenge-header">
-                  <h3>{challenge.challengeTitle}</h3>
-                  <div className="tag-container">
-                    <span className="challenge-category">{challenge.category}</span>
-                    <span className="challenge-difficulty">{challenge.difficulty}</span>
+              <div key={challenge.id} style={styles.challengeItem}>
+                <div style={styles.challengeHeader}>
+                  <h3 style={styles.challengeTitle}>{challenge.challengeTitle}</h3>
+                  <div style={styles.tagContainer}>
+                    <span style={{...styles.challengeCategory, backgroundColor: getCategoryColor(challenge.category)}}>
+                      {challenge.category}
+                    </span>
+                    <span style={{...styles.challengeDifficulty, backgroundColor: getDifficultyColor(challenge.difficulty)}}>
+                      {challenge.difficulty}
+                    </span>
                   </div>
                 </div>
                 
-                <div className="challenge-meta">
-                  <span className="meta-item">
-                    <span className="meta-icon">📅</span>
-                    <span><strong>Starts:</strong> {new Date(challenge.startDate).toLocaleDateString()}</span>
+                <div style={styles.challengeMeta}>
+                  <span style={styles.metaItem}>
+                    <span>📅</span>
+                    <span>Starts: {new Date(challenge.startDate).toLocaleDateString()}</span>
                   </span>
-                  <span className="meta-item">
-                    <span className="meta-icon">🏁</span>
-                    <span><strong>Ends:</strong> {new Date(challenge.endDate).toLocaleDateString()}</span>
+                  <span style={styles.metaItem}>
+                    <span>🏁</span>
+                    <span>Ends: {new Date(challenge.endDate).toLocaleDateString()}</span>
                   </span>
                 </div>
                 
-                <p>{challenge.challengeDescription}</p>
+                <p style={styles.challengeDescription}>{challenge.challengeDescription}</p>
                 
-                <div className="challenge-actions">
+                <div style={styles.challengeActions}>
                   <button 
-                    className="edit-btn"
+                    style={styles.editBtn}
                     onClick={() => editChallenge(challenge)}
                   >
                     Edit
                   </button>
                   <button 
-                    className="delete-btn"
+                    style={styles.deleteBtn}
                     onClick={() => deleteChallenge(challenge.id)}
                   >
                     Delete
@@ -510,6 +250,222 @@ const ChallengeForm = () => {
       </div>
     </div>
   );
+};
+
+// Helper functions for colors
+const getCategoryColor = (category) => {
+  const colors = {
+    'Fitness': '#FF6B6B',
+    'Nutrition': '#4ECDC4',
+    'Mindfulness': '#A0E7A0',
+    'Productivity': '#FFB347',
+    'Learning': '#77A1D3',
+    'Social': '#C9A0DC'
+  };
+  return colors[category] || '#E0E0E0';
+};
+
+const getDifficultyColor = (difficulty) => {
+  const colors = {
+    'Easy': '#A0E7A0',
+    'Medium': '#FFB347',
+    'Hard': '#FF6B6B',
+    'Expert': '#C9A0DC'
+  };
+  return colors[difficulty] || '#E0E0E0';
+};
+
+const styles = {
+  container: {
+    display: 'flex',
+    gap: '20px',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '20px',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    backgroundColor: '#F7FFF7',
+    minHeight: '100vh',
+  },
+  challengeForm: {
+    flex: '0 0 350px',
+    background: 'white',
+    borderRadius: '12px',
+    padding: '20px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+    position: 'sticky',
+    top: '20px',
+    height: 'fit-content',
+  },
+  challengesList: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  },
+  sectionTitle: {
+    color: '#292F36',
+    fontSize: '22px',
+    marginBottom: '20px',
+    paddingBottom: '10px',
+    borderBottom: '2px solid #FF6B6B',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  formGroup: {
+    marginBottom: '20px',
+  },
+  formRow: {
+    display: 'flex',
+    gap: '20px',
+  },
+  label: {
+    display: 'block',
+    marginBottom: '8px',
+    fontWeight: 600,
+    color: '#292F36',
+  },
+  input: {
+    width: '100%',
+    padding: '12px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    fontSize: '15px',
+    backgroundColor: '#fff',
+    transition: 'border 0.3s',
+  },
+  formActions: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '25px',
+  },
+  submitBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#FF6B6B',
+    color: 'white',
+    flex: 1,
+  },
+  cancelBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#e0e0e0',
+    color: '#555',
+  },
+  challengeItem: {
+    background: 'white',
+    borderRadius: '12px',
+    padding: '20px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+    transition: 'transform 0.3s',
+  },
+  challengeTitle: {
+    margin: '0 0 15px 0',
+    color: '#292F36',
+    fontSize: '20px',
+    fontWeight: 700,
+  },
+  challengeDescription: {
+    margin: '8px 0',
+    color: '#555',
+    fontSize: '15px',
+    lineHeight: 1.5,
+  },
+  challengeActions: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '20px',
+  },
+  editBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#4ECDC4',
+    color: 'white',
+  },
+  deleteBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#FF6B6B',
+    color: 'white',
+  },
+  challengeMeta: {
+    display: 'flex',
+    gap: '15px',
+    marginBottom: '15px',
+  },
+  metaItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+    color: '#555',
+    fontSize: '14px',
+  },
+  challengeHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '15px',
+  },
+  challengeCategory: {
+    color: 'white',
+    padding: '5px 10px',
+    borderRadius: '20px',
+    fontSize: '12px',
+    fontWeight: 600,
+  },
+  challengeDifficulty: {
+    color: 'white',
+    padding: '5px 10px',
+    borderRadius: '20px',
+    fontSize: '12px',
+    fontWeight: 600,
+  },
+  tagContainer: {
+    display: 'flex',
+    gap: '10px',
+  },
+  emptyState: {
+    textAlign: 'center',
+    padding: '40px',
+    background: 'white',
+    borderRadius: '12px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+    color: '#555',
+  },
+  '@media (max-width: 768px)': {
+    container: {
+      flexDirection: 'column',
+    },
+    challengeForm: {
+      position: 'static',
+      flex: 1,
+    },
+    formRow: {
+      flexDirection: 'column',
+      gap: '20px',
+    },
+  },
 };
 
 export default ChallengeForm;

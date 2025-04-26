@@ -115,277 +115,12 @@ const PlanForm = () => {
   };
 
   return (
-    <div className="plan-container">
-      <style jsx>{`
-        .plan-container {
-          display: flex;
-          gap: 20px;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 20px;
-          font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
-          background-color: #f5f5f5;
-          min-height: 100vh;
-        }
-
-        .plan-form {
-          flex: 0 0 350px;
-          background: white;
-          border-radius: 12px;
-          padding: 20px;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          position: sticky;
-          top: 20px;
-          height: fit-content;
-        }
-
-        .plans-list {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-
-        h2 {
-          color: #333;
-          font-size: 22px;
-          margin-bottom: 20px;
-          padding-bottom: 10px;
-          border-bottom: 2px solid #ff6b6b;
-        }
-
-        .form-group {
-          margin-bottom: 20px;
-        }
-
-        label {
-          display: block;
-          margin-bottom: 8px;
-          font-weight: 600;
-          color: #333;
-        }
-
-        input, textarea, select {
-          width: 100%;
-          padding: 12px;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          font-size: 15px;
-          background-color: #fff;
-          transition: border 0.3s;
-        }
-
-        input:focus, textarea:focus, select:focus {
-          border-color: #ff6b6b;
-          outline: none;
-        }
-
-        textarea {
-          min-height: 120px;
-          resize: vertical;
-        }
-
-        .form-actions {
-          display: flex;
-          gap: 10px;
-          margin-top: 25px;
-        }
-
-        button {
-          padding: 12px 18px;
-          border: none;
-          border-radius: 8px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s;
-          font-size: 15px;
-        }
-
-        .submit-btn {
-          background-color: #ff6b6b;
-          color: white;
-          flex: 1;
-        }
-
-        .submit-btn:hover {
-          background-color: #ff5252;
-          transform: translateY(-2px);
-        }
-
-        .cancel-btn {
-          background-color: #e0e0e0;
-          color: #555;
-        }
-
-        .cancel-btn:hover {
-          background-color: #d0d0d0;
-          transform: translateY(-2px);
-        }
-
-        .plan-item {
-          background: white;
-          border-radius: 12px;
-          padding: 20px;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          transition: transform 0.3s;
-        }
-
-        .plan-item:hover {
-          transform: translateY(-5px);
-        }
-
-        .plan-item h3 {
-          margin: 0 0 15px 0;
-          color: #333;
-          font-size: 20px;
-          font-weight: 700;
-        }
-
-        .plan-item p {
-          margin: 8px 0;
-          color: #555;
-          font-size: 15px;
-          line-height: 1.5;
-        }
-
-        .plan-actions {
-          display: flex;
-          gap: 10px;
-          margin-top: 20px;
-        }
-
-        .edit-btn {
-          background-color: #4dabf7;
-          color: white;
-        }
-
-        .edit-btn:hover {
-          background-color: #339af0;
-          transform: translateY(-2px);
-        }
-
-        .delete-btn {
-          background-color: #ff8787;
-          color: white;
-        }
-
-        .delete-btn:hover {
-          background-color: #ff6b6b;
-          transform: translateY(-2px);
-        }
-
-        .meal-list {
-          margin-top: 15px;
-          background: #f8f9fa;
-          border-radius: 8px;
-          padding: 10px;
-        }
-
-        .meal-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 10px;
-          border-bottom: 1px solid #eee;
-          background: white;
-          margin-bottom: 8px;
-          border-radius: 6px;
-        }
-
-        .meal-actions {
-          display: flex;
-          gap: 5px;
-        }
-
-        .meal-input-group {
-          display: flex;
-          gap: 10px;
-          margin-top: 15px;
-        }
-
-        .meal-input {
-          flex: 1;
-        }
-
-        .add-meal-btn {
-          background-color: #51cf66;
-          color: white;
-          padding: 0 15px;
-        }
-
-        .add-meal-btn:hover {
-          background-color: #40c057;
-          transform: translateY(-2px);
-        }
-
-        .remove-meal-btn {
-          background-color: #ff8787;
-          color: white;
-          padding: 5px 10px;
-          border-radius: 4px;
-          font-size: 12px;
-        }
-
-        .remove-meal-btn:hover {
-          background-color: #ff6b6b;
-        }
-
-        .plan-meta {
-          display: flex;
-          gap: 15px;
-          margin-bottom: 15px;
-        }
-
-        .meta-item {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          color: #555;
-          font-size: 14px;
-        }
-
-        .meta-icon {
-          color: #ff6b6b;
-        }
-
-        .plan-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 15px;
-        }
-
-        .plan-category {
-          background-color: #ffe3e3;
-          color: #ff6b6b;
-          padding: 5px 10px;
-          border-radius: 20px;
-          font-size: 12px;
-          font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-          .plan-container {
-            flex-direction: column;
-          }
-          
-          .plan-form {
-            position: static;
-            flex: 1;
-          }
-          
-          .plan-meta {
-            flex-direction: column;
-            gap: 8px;
-          }
-        }
-      `}</style>
-
-      <div className="plan-form">
-        <h2>{isEditing ? 'Edit Plan' : 'Create New Plan'}</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Title:</label>
+    <div style={styles.container}>
+      <div style={styles.planForm}>
+        <h2 style={styles.sectionTitle}>{isEditing ? 'Edit Plan' : 'Create New Plan'}</h2>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Title:</label>
             <input
               type="text"
               name="planTitle"
@@ -393,27 +128,30 @@ const PlanForm = () => {
               value={plan.planTitle}
               onChange={handleChange}
               required
+              style={styles.input}
             />
           </div>
           
-          <div className="form-group">
-            <label>Description:</label>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Description:</label>
             <textarea
               name="planDescription"
               placeholder="Describe your plan..."
               value={plan.planDescription}
               onChange={handleChange}
               required
+              style={{...styles.input, minHeight: '120px'}}
             />
           </div>
           
-          <div className="form-group">
-            <label>Duration:</label>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Duration:</label>
             <select
               name="planDuration"
               value={plan.planDuration}
               onChange={handleChange}
               required
+              style={styles.input}
             >
               {durations.map((duration, index) => (
                 <option key={index} value={duration}>{duration}</option>
@@ -421,13 +159,14 @@ const PlanForm = () => {
             </select>
           </div>
           
-          <div className="form-group">
-            <label>Difficulty:</label>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Difficulty:</label>
             <select
               name="planDifficulty"
               value={plan.planDifficulty}
               onChange={handleChange}
               required
+              style={styles.input}
             >
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
@@ -435,13 +174,14 @@ const PlanForm = () => {
             </select>
           </div>
           
-          <div className="form-group">
-            <label>Category:</label>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Category:</label>
             <select
               name="planCategory"
               value={plan.planCategory}
               onChange={handleChange}
               required
+              style={styles.input}
             >
               {categories.map((category, index) => (
                 <option key={index} value={category}>{category}</option>
@@ -449,15 +189,15 @@ const PlanForm = () => {
             </select>
           </div>
           
-          <div className="form-group">
-            <label>Meals:</label>
-            <div className="meal-list">
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Meals:</label>
+            <div style={styles.mealList}>
               {plan.meals.map((meal, index) => (
-                <div key={index} className="meal-item">
+                <div key={index} style={styles.mealItem}>
                   <span>{meal}</span>
                   <button
                     type="button"
-                    className="remove-meal-btn"
+                    style={styles.removeMealBtn}
                     onClick={() => removeMeal(index)}
                   >
                     ×
@@ -465,17 +205,17 @@ const PlanForm = () => {
                 </div>
               ))}
             </div>
-            <div className="meal-input-group">
+            <div style={styles.mealInputGroup}>
               <input
                 type="text"
-                className="meal-input"
                 placeholder="Enter meal details (e.g., Breakfast: Oatmeal)"
                 value={newMeal}
                 onChange={handleMealChange}
+                style={{...styles.input, flex: 1}}
               />
               <button
                 type="button"
-                className="add-meal-btn"
+                style={styles.addMealBtn}
                 onClick={addMeal}
               >
                 Add
@@ -483,12 +223,12 @@ const PlanForm = () => {
             </div>
           </div>
           
-          <div className="form-actions">
-            <button type="submit" className="submit-btn">
+          <div style={styles.formActions}>
+            <button type="submit" style={styles.submitBtn}>
               {isEditing ? 'Update Plan' : 'Create Plan'}
             </button>
             {isEditing && (
-              <button type="button" className="cancel-btn" onClick={resetForm}>
+              <button type="button" style={styles.cancelBtn} onClick={resetForm}>
                 Cancel
               </button>
             )}
@@ -496,52 +236,52 @@ const PlanForm = () => {
         </form>
       </div>
 
-      <div className="plans-list">
-        <h2>Current Plans</h2>
+      <div style={styles.plansList}>
+        <h2 style={styles.sectionTitle}>Current Plans</h2>
         {plans.length === 0 ? (
           <p>No plans available. Create your first plan!</p>
         ) : (
           <div>
             {plans.map((plan) => (
-              <div key={plan.id} className="plan-item">
-                <div className="plan-header">
-                  <h3>{plan.planTitle}</h3>
-                  <span className="plan-category">{plan.planCategory}</span>
+              <div key={plan.id} style={styles.planItem}>
+                <div style={styles.planHeader}>
+                  <h3 style={styles.planTitle}>{plan.planTitle}</h3>
+                  <span style={styles.planCategory}>{plan.planCategory}</span>
                 </div>
                 
-                <div className="plan-meta">
-                  <span className="meta-item">
-                    <span className="meta-icon">⏱️</span>
+                <div style={styles.planMeta}>
+                  <span style={styles.metaItem}>
+                    <span>⏱️</span>
                     <span>{plan.planDuration}</span>
                   </span>
-                  <span className="meta-item">
-                    <span className="meta-icon">🔥</span>
+                  <span style={styles.metaItem}>
+                    <span>🔥</span>
                     <span>{plan.planDifficulty}</span>
                   </span>
                 </div>
                 
-                <p>{plan.planDescription}</p>
+                <p style={styles.planDescription}>{plan.planDescription}</p>
                 
                 {plan.meals && plan.meals.length > 0 && (
-                  <div className="meal-list">
+                  <div style={styles.mealList}>
                     <p><strong>Meals:</strong></p>
                     {plan.meals.map((meal, index) => (
-                      <div key={index} className="meal-item">
+                      <div key={index} style={styles.mealItem}>
                         <span>{meal}</span>
                       </div>
                     ))}
                   </div>
                 )}
                 
-                <div className="plan-actions">
+                <div style={styles.planActions}>
                   <button 
-                    className="edit-btn"
+                    style={styles.editBtn}
                     onClick={() => editPlan(plan)}
                   >
                     Edit
                   </button>
                   <button 
-                    className="delete-btn"
+                    style={styles.deleteBtn}
                     onClick={() => deletePlan(plan.id)}
                   >
                     Delete
@@ -554,6 +294,216 @@ const PlanForm = () => {
       </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    display: 'flex',
+    gap: '20px',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '20px',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    backgroundColor: '#F7FFF7',
+    minHeight: '100vh',
+  },
+  planForm: {
+    flex: '0 0 350px',
+    background: 'white',
+    borderRadius: '12px',
+    padding: '20px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+    position: 'sticky',
+    top: '20px',
+    height: 'fit-content',
+  },
+  plansList: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  },
+  sectionTitle: {
+    color: '#292F36',
+    fontSize: '22px',
+    marginBottom: '20px',
+    paddingBottom: '10px',
+    borderBottom: '2px solid #FF6B6B',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  formGroup: {
+    marginBottom: '20px',
+  },
+  label: {
+    display: 'block',
+    marginBottom: '8px',
+    fontWeight: 600,
+    color: '#292F36',
+  },
+  input: {
+    width: '100%',
+    padding: '12px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    fontSize: '15px',
+    backgroundColor: '#fff',
+    transition: 'border 0.3s',
+  },
+  formActions: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '25px',
+  },
+  submitBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#FF6B6B',
+    color: 'white',
+    flex: 1,
+  },
+  cancelBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#e0e0e0',
+    color: '#555',
+  },
+  planItem: {
+    background: 'white',
+    borderRadius: '12px',
+    padding: '20px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+    transition: 'transform 0.3s',
+  },
+  planTitle: {
+    margin: '0 0 15px 0',
+    color: '#292F36',
+    fontSize: '20px',
+    fontWeight: 700,
+  },
+  planDescription: {
+    margin: '8px 0',
+    color: '#555',
+    fontSize: '15px',
+    lineHeight: 1.5,
+  },
+  planActions: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '20px',
+  },
+  editBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#4ECDC4',
+    color: 'white',
+  },
+  deleteBtn: {
+    padding: '12px 18px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    fontSize: '15px',
+    backgroundColor: '#FF6B6B',
+    color: 'white',
+  },
+  mealList: {
+    marginTop: '15px',
+    background: '#f8f9fa',
+    borderRadius: '8px',
+    padding: '10px',
+  },
+  mealItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px',
+    borderBottom: '1px solid #eee',
+    background: 'white',
+    marginBottom: '8px',
+    borderRadius: '6px',
+  },
+  mealInputGroup: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '15px',
+  },
+  addMealBtn: {
+    backgroundColor: '#4ECDC4',
+    color: 'white',
+    padding: '0 15px',
+    border: 'none',
+    borderRadius: '8px',
+    fontWeight: 600,
+    cursor: 'pointer',
+  },
+  removeMealBtn: {
+    backgroundColor: '#FF6B6B',
+    color: 'white',
+    padding: '5px 10px',
+    borderRadius: '4px',
+    fontSize: '12px',
+    border: 'none',
+    cursor: 'pointer',
+  },
+  planMeta: {
+    display: 'flex',
+    gap: '15px',
+    marginBottom: '15px',
+  },
+  metaItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+    color: '#555',
+    fontSize: '14px',
+  },
+  planHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '15px',
+  },
+  planCategory: {
+    backgroundColor: '#ffe3e3',
+    color: '#FF6B6B',
+    padding: '5px 10px',
+    borderRadius: '20px',
+    fontSize: '12px',
+    fontWeight: 600,
+  },
+  '@media (max-width: 768px)': {
+    container: {
+      flexDirection: 'column',
+    },
+    planForm: {
+      position: 'static',
+      flex: 1,
+    },
+    planMeta: {
+      flexDirection: 'column',
+      gap: '8px',
+    },
+  },
 };
 
 export default PlanForm;
