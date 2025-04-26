@@ -1,8 +1,8 @@
 package backend.Controller;
 
+import backend.Exception.PlaningNotFoundException;
 import backend.Model.PlaningModel;
 import backend.Repository.PlaningRepository;
-import backend.Exception.PlaningNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,34 +10,32 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/planing")
+@RequestMapping("/plans")
 public class PlaningController {
-
     @Autowired
     private PlaningRepository planingRepository;
 
-    // Create a new plan
     @PostMapping
-    public PlaningModel newPlaningModel(@RequestBody PlaningModel newPlaningModel) {
-        return planingRepository.save(newPlaningModel);
+    public PlaningModel newPlan(@RequestBody PlaningModel newPlan) {
+        return planingRepository.save(newPlan);
     }
 
-    // Get all plans
-    @GetMapping
-    public List<PlaningModel> getAllPlans() {
+    @GetMapping("/plans")
+    List<PlaningModel> getAllPlans() {
         return planingRepository.findAll();
     }
 
-    // Get a single plan by ID
-    @GetMapping("/{id}")
-    public PlaningModel getPlanById(@PathVariable Long id) {
+    @GetMapping("/plans/{id}")
+    PlaningModel getPlanById(@PathVariable Long id) {
         return planingRepository.findById(id)
                 .orElseThrow(() -> new PlaningNotFoundException(id));
     }
 
-    // Update a plan by ID
-    @PutMapping("/{id}")
-    public PlaningModel updatePlan(@RequestBody PlaningModel updatedPlan, @PathVariable Long id) {
+    @PutMapping("/plans/{id}")
+    public PlaningModel updatePlan(
+            @RequestBody PlaningModel updatedPlan,
+            @PathVariable Long id
+    ) {
         return planingRepository.findById(id)
                 .map(plan -> {
                     plan.setPlanTitle(updatedPlan.getPlanTitle());
@@ -47,11 +45,11 @@ public class PlaningController {
                     plan.setPlanCategory(updatedPlan.getPlanCategory());
                     plan.setMeals(updatedPlan.getMeals());
                     return planingRepository.save(plan);
-                }).orElseThrow(() -> new PlaningNotFoundException(id));
+                })
+                .orElseThrow(() -> new PlaningNotFoundException(id));
     }
 
-    // Delete a plan by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/plans/{id}")
     public String deletePlan(@PathVariable Long id) {
         if (!planingRepository.existsById(id)) {
             throw new PlaningNotFoundException(id);

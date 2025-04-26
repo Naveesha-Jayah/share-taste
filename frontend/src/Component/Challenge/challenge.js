@@ -7,12 +7,15 @@ const ChallengeForm = () => {
     id: null,
     challengeTitle: '',
     challengeDescription: '',
-    category: '',
+    category: 'Fitness',
     difficulty: 'Easy',
     startDate: '',
-    endDate: '',
+    endDate: ''
   });
   const [isEditing, setIsEditing] = useState(false);
+
+  const categories = ['Fitness', 'Nutrition', 'Mindfulness', 'Productivity', 'Learning', 'Social'];
+  const difficulties = ['Easy', 'Medium', 'Hard', 'Expert'];
 
   useEffect(() => {
     fetchChallenges();
@@ -20,7 +23,7 @@ const ChallengeForm = () => {
 
   const fetchChallenges = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/challenges');
+      const response = await axios.get('http://localhost:8081/challenges/challenges');
       setChallenges(response.data);
     } catch (error) {
       console.error('Error fetching challenges:', error);
@@ -28,14 +31,15 @@ const ChallengeForm = () => {
   };
 
   const handleChange = (e) => {
-    setChallenge({ ...challenge, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setChallenge({ ...challenge, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:8081/challenges/${challenge.id}`, challenge);
+        await axios.put(`http://localhost:8081/challenges/challenges/${challenge.id}`, challenge);
         alert('Challenge Updated Successfully!');
       } else {
         await axios.post('http://localhost:8081/challenges', challenge);
@@ -56,8 +60,8 @@ const ChallengeForm = () => {
       challengeDescription: challengeToEdit.challengeDescription,
       category: challengeToEdit.category,
       difficulty: challengeToEdit.difficulty,
-      startDate: challengeToEdit.startDate.split('T')[0],
-      endDate: challengeToEdit.endDate.split('T')[0],
+      startDate: challengeToEdit.startDate,
+      endDate: challengeToEdit.endDate
     });
     setIsEditing(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -66,7 +70,7 @@ const ChallengeForm = () => {
   const deleteChallenge = async (id) => {
     if (window.confirm('Are you sure you want to delete this challenge?')) {
       try {
-        await axios.delete(`http://localhost:8081/challenges/${id}`);
+        await axios.delete(`http://localhost:8081/challenges/challenges/${id}`);
         alert('Challenge deleted successfully!');
         fetchChallenges();
       } catch (error) {
@@ -81,10 +85,10 @@ const ChallengeForm = () => {
       id: null,
       challengeTitle: '',
       challengeDescription: '',
-      category: '',
+      category: 'Fitness',
       difficulty: 'Easy',
       startDate: '',
-      endDate: '',
+      endDate: ''
     });
     setIsEditing(false);
   };
@@ -92,143 +96,257 @@ const ChallengeForm = () => {
   return (
     <div className="challenge-container">
       <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
         .challenge-container {
           display: flex;
-          gap: 20px;
+          gap: 30px;
           max-width: 1200px;
           margin: 0 auto;
-          padding: 20px;
-          font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
-          background-color: #f0f2f5;
+          padding: 30px 20px;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          background-color: #f8fafc;
           min-height: 100vh;
         }
 
         .challenge-form {
-          flex: 0 0 350px;
+          flex: 0 0 380px;
           background: white;
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+          border-radius: 16px;
+          padding: 25px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
           position: sticky;
-          top: 20px;
+          top: 30px;
           height: fit-content;
+          border: 1px solid #e2e8f0;
         }
 
         .challenges-list {
           flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 15px;
+          gap: 25px;
         }
 
         h2 {
-          color: #1c1e21;
-          font-size: 20px;
-          margin-bottom: 15px;
-          padding-bottom: 10px;
-          border-bottom: 1px solid #dddfe2;
+          color: #1e293b;
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 25px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid #e2e8f0;
         }
 
         .form-group {
-          margin-bottom: 15px;
+          margin-bottom: 25px;
         }
 
         label {
           display: block;
-          margin-bottom: 5px;
+          margin-bottom: 10px;
           font-weight: 600;
-          color: #1c1e21;
+          color: #334155;
+          font-size: 14px;
         }
 
         input, textarea, select {
           width: 100%;
-          padding: 10px;
-          border: 1px solid #dddfe2;
-          border-radius: 6px;
+          padding: 12px 15px;
+          border: 1px solid #cbd5e1;
+          border-radius: 10px;
           font-size: 15px;
-          background-color: #f0f2f5;
+          background-color: #fff;
+          transition: all 0.2s;
+          color: #334155;
+        }
+
+        input:focus, textarea:focus, select:focus {
+          border-color: #6366f1;
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         textarea {
-          min-height: 100px;
+          min-height: 120px;
           resize: vertical;
+          line-height: 1.5;
         }
 
         .form-actions {
           display: flex;
-          gap: 10px;
-          margin-top: 20px;
+          gap: 12px;
+          margin-top: 30px;
         }
 
         button {
-          padding: 10px 15px;
+          padding: 12px 20px;
           border: none;
-          border-radius: 6px;
+          border-radius: 10px;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .submit-btn {
-          background-color: #1877f2;
+          background-color: #6366f1;
           color: white;
           flex: 1;
         }
 
         .submit-btn:hover {
-          background-color: #166fe5;
+          background-color: #4f46e5;
+          transform: translateY(-1px);
         }
 
         .cancel-btn {
-          background-color: #e4e6eb;
-          color: #4b4f56;
+          background-color: #f1f5f9;
+          color: #64748b;
         }
 
         .cancel-btn:hover {
-          background-color: #d8dadf;
+          background-color: #e2e8f0;
+          transform: translateY(-1px);
         }
 
         .challenge-item {
           background: white;
-          border-radius: 8px;
-          padding: 15px;
-          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+          border-radius: 16px;
+          padding: 25px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+          transition: all 0.2s;
+          border: 1px solid #e2e8f0;
+        }
+
+        .challenge-item:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
         }
 
         .challenge-item h3 {
-          margin: 0 0 10px 0;
-          color: #1c1e21;
-          font-size: 18px;
+          margin: 0 0 15px 0;
+          color: #1e293b;
+          font-size: 20px;
+          font-weight: 700;
         }
 
         .challenge-item p {
-          margin: 5px 0;
-          color: #65676b;
-          font-size: 14px;
+          margin: 10px 0;
+          color: #475569;
+          font-size: 15px;
+          line-height: 1.6;
         }
 
         .challenge-actions {
           display: flex;
-          gap: 10px;
-          margin-top: 15px;
+          gap: 12px;
+          margin-top: 25px;
         }
 
         .edit-btn {
-          background-color: #e7f3ff;
-          color: #1877f2;
+          background-color: #6366f1;
+          color: white;
+          padding: 10px 16px;
         }
 
         .edit-btn:hover {
-          background-color: #d8e7ff;
+          background-color: #4f46e5;
+          transform: translateY(-1px);
         }
 
         .delete-btn {
-          background-color: #ffecec;
-          color: #fa383e;
+          background-color: #ef4444;
+          color: white;
+          padding: 10px 16px;
         }
 
         .delete-btn:hover {
-          background-color: #ffdddd;
+          background-color: #dc2626;
+          transform: translateY(-1px);
+        }
+
+        .challenge-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          margin-bottom: 20px;
+        }
+
+        .meta-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #64748b;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .meta-icon {
+          color: #6366f1;
+          font-size: 16px;
+        }
+
+        .challenge-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 20px;
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+
+        .challenge-category {
+          background-color: #e0e7ff;
+          color: #4338ca;
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 13px;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .challenge-difficulty {
+          background-color: #ede9fe;
+          color: #6d28d9;
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 13px;
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .date-range {
+          display: flex;
+          gap: 15px;
+          margin-top: 20px;
+        }
+
+        .date-group {
+          flex: 1;
+        }
+
+        .empty-state {
+          background: white;
+          border-radius: 16px;
+          padding: 40px 20px;
+          text-align: center;
+          border: 1px solid #e2e8f0;
+        }
+
+        .empty-state p {
+          color: #64748b;
+          margin-top: 15px;
+        }
+
+        .tag-container {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         @media (max-width: 768px) {
@@ -239,6 +357,11 @@ const ChallengeForm = () => {
           .challenge-form {
             position: static;
             flex: 1;
+          }
+          
+          .date-range {
+            flex-direction: column;
+            gap: 20px;
           }
         }
       `}</style>
@@ -251,7 +374,7 @@ const ChallengeForm = () => {
             <input
               type="text"
               name="challengeTitle"
-              placeholder="Challenge Title"
+              placeholder="e.g., 30-Day Fitness Challenge"
               value={challenge.challengeTitle}
               onChange={handleChange}
               required
@@ -262,7 +385,7 @@ const ChallengeForm = () => {
             <label>Description:</label>
             <textarea
               name="challengeDescription"
-              placeholder="Challenge Description"
+              placeholder="Describe the challenge rules and benefits..."
               value={challenge.challengeDescription}
               onChange={handleChange}
               required
@@ -271,14 +394,16 @@ const ChallengeForm = () => {
           
           <div className="form-group">
             <label>Category:</label>
-            <input
-              type="text"
+            <select
               name="category"
-              placeholder="Category"
               value={challenge.category}
               onChange={handleChange}
               required
-            />
+            >
+              {categories.map((category, index) => (
+                <option key={index} value={category}>{category}</option>
+              ))}
+            </select>
           </div>
           
           <div className="form-group">
@@ -289,32 +414,34 @@ const ChallengeForm = () => {
               onChange={handleChange}
               required
             >
-              <option value="Easy">Easy</option>
-              <option value="Medium">Medium</option>
-              <option value="Hard">Hard</option>
+              {difficulties.map((difficulty, index) => (
+                <option key={index} value={difficulty}>{difficulty}</option>
+              ))}
             </select>
           </div>
           
-          <div className="form-group">
-            <label>Start Date:</label>
-            <input
-              type="date"
-              name="startDate"
-              value={challenge.startDate}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>End Date:</label>
-            <input
-              type="date"
-              name="endDate"
-              value={challenge.endDate}
-              onChange={handleChange}
-              required
-            />
+          <div className="date-range">
+            <div className="form-group date-group">
+              <label>Start Date:</label>
+              <input
+                type="date"
+                name="startDate"
+                value={challenge.startDate}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group date-group">
+              <label>End Date:</label>
+              <input
+                type="date"
+                name="endDate"
+                value={challenge.endDate}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
           
           <div className="form-actions">
@@ -333,16 +460,35 @@ const ChallengeForm = () => {
       <div className="challenges-list">
         <h2>Current Challenges</h2>
         {challenges.length === 0 ? (
-          <p>No challenges available</p>
+          <div className="empty-state">
+            <h3>No challenges yet</h3>
+            <p>Create your first challenge to get started!</p>
+          </div>
         ) : (
           <div>
             {challenges.map((challenge) => (
               <div key={challenge.id} className="challenge-item">
-                <h3>{challenge.challengeTitle}</h3>
-                <p><strong>Category:</strong> {challenge.category}</p>
-                <p><strong>Difficulty:</strong> {challenge.difficulty}</p>
-                <p><strong>Duration:</strong> {new Date(challenge.startDate).toLocaleDateString()} - {new Date(challenge.endDate).toLocaleDateString()}</p>
+                <div className="challenge-header">
+                  <h3>{challenge.challengeTitle}</h3>
+                  <div className="tag-container">
+                    <span className="challenge-category">{challenge.category}</span>
+                    <span className="challenge-difficulty">{challenge.difficulty}</span>
+                  </div>
+                </div>
+                
+                <div className="challenge-meta">
+                  <span className="meta-item">
+                    <span className="meta-icon">📅</span>
+                    <span><strong>Starts:</strong> {new Date(challenge.startDate).toLocaleDateString()}</span>
+                  </span>
+                  <span className="meta-item">
+                    <span className="meta-icon">🏁</span>
+                    <span><strong>Ends:</strong> {new Date(challenge.endDate).toLocaleDateString()}</span>
+                  </span>
+                </div>
+                
                 <p>{challenge.challengeDescription}</p>
+                
                 <div className="challenge-actions">
                   <button 
                     className="edit-btn"
