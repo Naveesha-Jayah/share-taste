@@ -117,74 +117,18 @@ const ChallengeForm = () => {
   };
 
   return (
-    <div className="challenge-container">
-      <div className="challenge-form">
-        <h2 className="section-title">{isEditing ? 'Edit Challenge' : 'Create New Challenge'}</h2>
-        <form onSubmit={handleSubmit} className="form">
-          <div className="form-group">
-            <label className="label">Title:</label>
-            <input
-              type="text"
-              name="challengeTitle"
-              placeholder="e.g., 30-Day Fitness Challenge"
-              value={challenge.challengeTitle}
-              onChange={handleChange}
-              required
-              className="input"
-            />
-          </div>
-          
-          <div className="form-group">
-            <label className="label">Description:</label>
-            <textarea
-              name="challengeDescription"
-              placeholder="Describe the challenge rules and benefits..."
-              value={challenge.challengeDescription}
-              onChange={handleChange}
-              required
-              className="input textarea"
-            />
-          </div>
-          
-          <div className="form-row">
+    <div className="app-container">
+      <div className="form-section">
+        <div className="form-wrapper">
+          <h2 className="section-title">{isEditing ? 'Edit Challenge' : 'Create New Challenge'}</h2>
+          <form onSubmit={handleSubmit} className="form">
             <div className="form-group">
-              <label className="label">Category:</label>
-              <select
-                name="category"
-                value={challenge.category}
-                onChange={handleChange}
-                required
-                className="input"
-              >
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
-            
-            <div className="form-group">
-              <label className="label">Difficulty:</label>
-              <select
-                name="difficulty"
-                value={challenge.difficulty}
-                onChange={handleChange}
-                required
-                className="input"
-              >
-                {difficulties.map((difficulty, index) => (
-                  <option key={index} value={difficulty}>{difficulty}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          
-          <div className="form-row">
-            <div className="form-group">
-              <label className="label">Start Date:</label>
+              <label className="label">Title:</label>
               <input
-                type="date"
-                name="startDate"
-                value={challenge.startDate}
+                type="text"
+                name="challengeTitle"
+                placeholder="e.g., 30-Day Fitness Challenge"
+                value={challenge.challengeTitle}
                 onChange={handleChange}
                 required
                 className="input"
@@ -192,90 +136,150 @@ const ChallengeForm = () => {
             </div>
             
             <div className="form-group">
-              <label className="label">End Date:</label>
-              <input
-                type="date"
-                name="endDate"
-                value={challenge.endDate}
+              <label className="label">Description:</label>
+              <textarea
+                name="challengeDescription"
+                placeholder="Describe the challenge rules and benefits..."
+                value={challenge.challengeDescription}
                 onChange={handleChange}
                 required
-                className="input"
+                className="input textarea"
               />
             </div>
-          </div>
-          
-          <div className="form-actions">
-            <button type="submit" className="submit-btn">
-              {isEditing ? 'Update Challenge' : 'Create Challenge'}
-            </button>
-            {isEditing && (
-              <button type="button" className="cancel-btn" onClick={resetForm}>
-                Cancel
+            
+            <div className="form-row">
+              <div className="form-group">
+                <label className="label">Category:</label>
+                <select
+                  name="category"
+                  value={challenge.category}
+                  onChange={handleChange}
+                  required
+                  className="input"
+                >
+                  {categories.map((category, index) => (
+                    <option key={index} value={category}>{category}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label className="label">Difficulty:</label>
+                <select
+                  name="difficulty"
+                  value={challenge.difficulty}
+                  onChange={handleChange}
+                  required
+                  className="input"
+                >
+                  {difficulties.map((difficulty, index) => (
+                    <option key={index} value={difficulty}>{difficulty}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            <div className="form-row">
+              <div className="form-group">
+                <label className="label">Start Date:</label>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={challenge.startDate}
+                  onChange={handleChange}
+                  required
+                  className="input"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="label">End Date:</label>
+                <input
+                  type="date"
+                  name="endDate"
+                  value={challenge.endDate}
+                  onChange={handleChange}
+                  required
+                  className="input"
+                />
+              </div>
+            </div>
+            
+            <div className="form-actions">
+              <button type="submit" className="submit-btn">
+                {isEditing ? 'Update Challenge' : 'Create Challenge'}
               </button>
-            )}
-          </div>
-        </form>
+              {isEditing && (
+                <button type="button" className="cancel-btn" onClick={resetForm}>
+                  Cancel
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
 
-      <div className="challenges-list">
-        <h2 className="section-title">Current Challenges</h2>
-        {challenges.length === 0 ? (
-          <div className="empty-state">
-            <p>No challenges available. Create your first challenge!</p>
-          </div>
-        ) : (
-          <div>
-            {challenges.map((challenge) => (
-              <div key={challenge.id} className="challenge-item">
-                <div className="challenge-header">
-                  <h3 className="challenge-title">{challenge.challengeTitle}</h3>
-                  <div className="tag-container">
-                    <span 
-                      className="challenge-category" 
-                      style={{ backgroundColor: getCategoryColor(challenge.category) }}
-                    >
-                      {challenge.category}
+      <div className="challenges-section">
+        <div className="challenges-container">
+          <h2 className="section-title">Current Challenges</h2>
+          {challenges.length === 0 ? (
+            <div className="empty-state">
+              <p>No challenges available. Create your first challenge!</p>
+            </div>
+          ) : (
+            <div className="challenges-grid">
+              {challenges.map((challenge) => (
+                <div key={challenge.id} className="challenge-item">
+                  <div className="challenge-header">
+                    <h3 className="challenge-title">{challenge.challengeTitle}</h3>
+                    <div className="tag-container">
+                      <span 
+                        className="challenge-category" 
+                        style={{ backgroundColor: getCategoryColor(challenge.category) }}
+                      >
+                        {challenge.category}
+                      </span>
+                      <span 
+                        className="challenge-difficulty" 
+                        style={{ backgroundColor: getDifficultyColor(challenge.difficulty) }}
+                      >
+                        {challenge.difficulty}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="challenge-meta">
+                    <span className="meta-item">
+                      <span>📅</span>
+                      <span>Starts: {new Date(challenge.startDate).toLocaleDateString()}</span>
                     </span>
-                    <span 
-                      className="challenge-difficulty" 
-                      style={{ backgroundColor: getDifficultyColor(challenge.difficulty) }}
-                    >
-                      {challenge.difficulty}
+                    <span className="meta-item">
+                      <span>🏁</span>
+                      <span>Ends: {new Date(challenge.endDate).toLocaleDateString()}</span>
                     </span>
                   </div>
+                  
+                  <p className="challenge-description">{challenge.challengeDescription}</p>
+                  
+                  <div className="challenge-actions">
+                    <button 
+                      className="edit-btn"
+                      onClick={() => editChallenge(challenge)}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      className="delete-btn"
+                      onClick={() => deleteChallenge(challenge.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
-                
-                <div className="challenge-meta">
-                  <span className="meta-item">
-                    <span>📅</span>
-                    <span>Starts: {new Date(challenge.startDate).toLocaleDateString()}</span>
-                  </span>
-                  <span className="meta-item">
-                    <span>🏁</span>
-                    <span>Ends: {new Date(challenge.endDate).toLocaleDateString()}</span>
-                  </span>
-                </div>
-                
-                <p className="challenge-description">{challenge.challengeDescription}</p>
-                
-                <div className="challenge-actions">
-                  <button 
-                    className="edit-btn"
-                    onClick={() => editChallenge(challenge)}
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    className="delete-btn"
-                    onClick={() => deleteChallenge(challenge.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
