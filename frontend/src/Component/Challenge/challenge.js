@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Challenge.css';
 
 const ChallengeForm = () => {
   const [challenges, setChallenges] = useState([]);
@@ -93,13 +94,35 @@ const ChallengeForm = () => {
     setIsEditing(false);
   };
 
+  const getCategoryColor = (category) => {
+    const colors = {
+      'Fitness': '#FF6B6B',
+      'Nutrition': '#4ECDC4',
+      'Mindfulness': '#A0E7A0',
+      'Productivity': '#FFB347',
+      'Learning': '#77A1D3',
+      'Social': '#C9A0DC'
+    };
+    return colors[category] || '#E0E0E0';
+  };
+
+  const getDifficultyColor = (difficulty) => {
+    const colors = {
+      'Easy': '#A0E7A0',
+      'Medium': '#FFB347',
+      'Hard': '#FF6B6B',
+      'Expert': '#C9A0DC'
+    };
+    return colors[difficulty] || '#E0E0E0';
+  };
+
   return (
-    <div style={styles.container}>
-      <div style={styles.challengeForm}>
-        <h2 style={styles.sectionTitle}>{isEditing ? 'Edit Challenge' : 'Create New Challenge'}</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Title:</label>
+    <div className="challenge-container">
+      <div className="challenge-form">
+        <h2 className="section-title">{isEditing ? 'Edit Challenge' : 'Create New Challenge'}</h2>
+        <form onSubmit={handleSubmit} className="form">
+          <div className="form-group">
+            <label className="label">Title:</label>
             <input
               type="text"
               name="challengeTitle"
@@ -107,31 +130,31 @@ const ChallengeForm = () => {
               value={challenge.challengeTitle}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="input"
             />
           </div>
           
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Description:</label>
+          <div className="form-group">
+            <label className="label">Description:</label>
             <textarea
               name="challengeDescription"
               placeholder="Describe the challenge rules and benefits..."
               value={challenge.challengeDescription}
               onChange={handleChange}
               required
-              style={{...styles.input, minHeight: '120px'}}
+              className="input textarea"
             />
           </div>
           
-          <div style={styles.formRow}>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Category:</label>
+          <div className="form-row">
+            <div className="form-group">
+              <label className="label">Category:</label>
               <select
                 name="category"
                 value={challenge.category}
                 onChange={handleChange}
                 required
-                style={styles.input}
+                className="input"
               >
                 {categories.map((category, index) => (
                   <option key={index} value={category}>{category}</option>
@@ -139,14 +162,14 @@ const ChallengeForm = () => {
               </select>
             </div>
             
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Difficulty:</label>
+            <div className="form-group">
+              <label className="label">Difficulty:</label>
               <select
                 name="difficulty"
                 value={challenge.difficulty}
                 onChange={handleChange}
                 required
-                style={styles.input}
+                className="input"
               >
                 {difficulties.map((difficulty, index) => (
                   <option key={index} value={difficulty}>{difficulty}</option>
@@ -155,38 +178,38 @@ const ChallengeForm = () => {
             </div>
           </div>
           
-          <div style={styles.formRow}>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Start Date:</label>
+          <div className="form-row">
+            <div className="form-group">
+              <label className="label">Start Date:</label>
               <input
                 type="date"
                 name="startDate"
                 value={challenge.startDate}
                 onChange={handleChange}
                 required
-                style={styles.input}
+                className="input"
               />
             </div>
             
-            <div style={styles.formGroup}>
-              <label style={styles.label}>End Date:</label>
+            <div className="form-group">
+              <label className="label">End Date:</label>
               <input
                 type="date"
                 name="endDate"
                 value={challenge.endDate}
                 onChange={handleChange}
                 required
-                style={styles.input}
+                className="input"
               />
             </div>
           </div>
           
-          <div style={styles.formActions}>
-            <button type="submit" style={styles.submitBtn}>
+          <div className="form-actions">
+            <button type="submit" className="submit-btn">
               {isEditing ? 'Update Challenge' : 'Create Challenge'}
             </button>
             {isEditing && (
-              <button type="button" style={styles.cancelBtn} onClick={resetForm}>
+              <button type="button" className="cancel-btn" onClick={resetForm}>
                 Cancel
               </button>
             )}
@@ -194,50 +217,56 @@ const ChallengeForm = () => {
         </form>
       </div>
 
-      <div style={styles.challengesList}>
-        <h2 style={styles.sectionTitle}>Current Challenges</h2>
+      <div className="challenges-list">
+        <h2 className="section-title">Current Challenges</h2>
         {challenges.length === 0 ? (
-          <div style={styles.emptyState}>
+          <div className="empty-state">
             <p>No challenges available. Create your first challenge!</p>
           </div>
         ) : (
           <div>
             {challenges.map((challenge) => (
-              <div key={challenge.id} style={styles.challengeItem}>
-                <div style={styles.challengeHeader}>
-                  <h3 style={styles.challengeTitle}>{challenge.challengeTitle}</h3>
-                  <div style={styles.tagContainer}>
-                    <span style={{...styles.challengeCategory, backgroundColor: getCategoryColor(challenge.category)}}>
+              <div key={challenge.id} className="challenge-item">
+                <div className="challenge-header">
+                  <h3 className="challenge-title">{challenge.challengeTitle}</h3>
+                  <div className="tag-container">
+                    <span 
+                      className="challenge-category" 
+                      style={{ backgroundColor: getCategoryColor(challenge.category) }}
+                    >
                       {challenge.category}
                     </span>
-                    <span style={{...styles.challengeDifficulty, backgroundColor: getDifficultyColor(challenge.difficulty)}}>
+                    <span 
+                      className="challenge-difficulty" 
+                      style={{ backgroundColor: getDifficultyColor(challenge.difficulty) }}
+                    >
                       {challenge.difficulty}
                     </span>
                   </div>
                 </div>
                 
-                <div style={styles.challengeMeta}>
-                  <span style={styles.metaItem}>
+                <div className="challenge-meta">
+                  <span className="meta-item">
                     <span>📅</span>
                     <span>Starts: {new Date(challenge.startDate).toLocaleDateString()}</span>
                   </span>
-                  <span style={styles.metaItem}>
+                  <span className="meta-item">
                     <span>🏁</span>
                     <span>Ends: {new Date(challenge.endDate).toLocaleDateString()}</span>
                   </span>
                 </div>
                 
-                <p style={styles.challengeDescription}>{challenge.challengeDescription}</p>
+                <p className="challenge-description">{challenge.challengeDescription}</p>
                 
-                <div style={styles.challengeActions}>
+                <div className="challenge-actions">
                   <button 
-                    style={styles.editBtn}
+                    className="edit-btn"
                     onClick={() => editChallenge(challenge)}
                   >
                     Edit
                   </button>
                   <button 
-                    style={styles.deleteBtn}
+                    className="delete-btn"
                     onClick={() => deleteChallenge(challenge.id)}
                   >
                     Delete
@@ -250,222 +279,6 @@ const ChallengeForm = () => {
       </div>
     </div>
   );
-};
-
-// Helper functions for colors
-const getCategoryColor = (category) => {
-  const colors = {
-    'Fitness': '#FF6B6B',
-    'Nutrition': '#4ECDC4',
-    'Mindfulness': '#A0E7A0',
-    'Productivity': '#FFB347',
-    'Learning': '#77A1D3',
-    'Social': '#C9A0DC'
-  };
-  return colors[category] || '#E0E0E0';
-};
-
-const getDifficultyColor = (difficulty) => {
-  const colors = {
-    'Easy': '#A0E7A0',
-    'Medium': '#FFB347',
-    'Hard': '#FF6B6B',
-    'Expert': '#C9A0DC'
-  };
-  return colors[difficulty] || '#E0E0E0';
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    gap: '20px',
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '20px',
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: '#F7FFF7',
-    minHeight: '100vh',
-  },
-  challengeForm: {
-    flex: '0 0 350px',
-    background: 'white',
-    borderRadius: '12px',
-    padding: '20px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    position: 'sticky',
-    top: '20px',
-    height: 'fit-content',
-  },
-  challengesList: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-  },
-  sectionTitle: {
-    color: '#292F36',
-    fontSize: '22px',
-    marginBottom: '20px',
-    paddingBottom: '10px',
-    borderBottom: '2px solid #FF6B6B',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  formGroup: {
-    marginBottom: '20px',
-  },
-  formRow: {
-    display: 'flex',
-    gap: '20px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '8px',
-    fontWeight: 600,
-    color: '#292F36',
-  },
-  input: {
-    width: '100%',
-    padding: '12px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    fontSize: '15px',
-    backgroundColor: '#fff',
-    transition: 'border 0.3s',
-  },
-  formActions: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '25px',
-  },
-  submitBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-    flex: 1,
-  },
-  cancelBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#e0e0e0',
-    color: '#555',
-  },
-  challengeItem: {
-    background: 'white',
-    borderRadius: '12px',
-    padding: '20px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    transition: 'transform 0.3s',
-  },
-  challengeTitle: {
-    margin: '0 0 15px 0',
-    color: '#292F36',
-    fontSize: '20px',
-    fontWeight: 700,
-  },
-  challengeDescription: {
-    margin: '8px 0',
-    color: '#555',
-    fontSize: '15px',
-    lineHeight: 1.5,
-  },
-  challengeActions: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '20px',
-  },
-  editBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#4ECDC4',
-    color: 'white',
-  },
-  deleteBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-  },
-  challengeMeta: {
-    display: 'flex',
-    gap: '15px',
-    marginBottom: '15px',
-  },
-  metaItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '5px',
-    color: '#555',
-    fontSize: '14px',
-  },
-  challengeHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '15px',
-  },
-  challengeCategory: {
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: 600,
-  },
-  challengeDifficulty: {
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: 600,
-  },
-  tagContainer: {
-    display: 'flex',
-    gap: '10px',
-  },
-  emptyState: {
-    textAlign: 'center',
-    padding: '40px',
-    background: 'white',
-    borderRadius: '12px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    color: '#555',
-  },
-  '@media (max-width: 768px)': {
-    container: {
-      flexDirection: 'column',
-    },
-    challengeForm: {
-      position: 'static',
-      flex: 1,
-    },
-    formRow: {
-      flexDirection: 'column',
-      gap: '20px',
-    },
-  },
 };
 
 export default ChallengeForm;
