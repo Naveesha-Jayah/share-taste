@@ -1,0 +1,235 @@
+.challenge-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F7FFF7;
+    min-height: 100vh;
+  }
+  
+  .challenge-form {
+    flex: 0 0 350px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+  }
+  
+  .challenges-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .section-title {
+    color: #292F36;
+    font-size: 22px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #FF6B6B;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #292F36;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #fff;
+    transition: border 0.3s;
+  }
+  
+  .textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+  }
+  
+  .submit-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #FF6B6B;
+    color: white;
+    flex: 1;
+  }
+  
+  .submit-btn:hover {
+    background-color: #e05555;
+  }
+  
+  .cancel-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #e0e0e0;
+    color: #555;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .challenge-item {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+  }
+  
+  .challenge-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .challenge-title {
+    margin: 0 0 15px 0;
+    color: #292F36;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .challenge-description {
+    margin: 8px 0;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  
+  .challenge-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .edit-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #4ECDC4;
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: #3ebbb2;
+  }
+  
+  .delete-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #FF6B6B;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #e05555;
+  }
+  
+  .challenge-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .challenge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .challenge-category,
+  .challenge-difficulty {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .tag-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    color: #555;
+  }
+  
+  @media (max-width: 768px) {
+    .challenge-container {
+      flex-direction: column;
+    }
+    
+    .challenge-form {
+      position: static;
+      flex: 1;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
