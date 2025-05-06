@@ -1,0 +1,273 @@
+.plan-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F7FFF7;
+    min-height: 100vh;
+  }
+  
+  .plan-form {
+    flex: 0 0 350px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+  }
+  
+  .plans-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .section-title {
+    color: #292F36;
+    font-size: 22px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #FF6B6B;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #292F36;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #fff;
+    transition: border 0.3s;
+  }
+  
+  .textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+  }
+  
+  .submit-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #FF6B6B;
+    color: white;
+    flex: 1;
+  }
+  
+  .submit-btn:hover {
+    background-color: #e05555;
+  }
+  
+  .cancel-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #e0e0e0;
+    color: #555;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .plan-item {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+  }
+  
+  .plan-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .plan-title {
+    margin: 0 0 15px 0;
+    color: #292F36;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .plan-description {
+    margin: 8px 0;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  
+  .plan-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .edit-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #4ECDC4;
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: #3ebbb2;
+  }
+  
+  .delete-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    background-color: #FF6B6B;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #e05555;
+  }
+  
+  .meal-list {
+    margin-top: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .meal-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    background: white;
+    margin-bottom: 8px;
+    border-radius: 6px;
+  }
+  
+  .meal-input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .meal-input {
+    flex: 1;
+  }
+  
+  .add-meal-btn {
+    background-color: #4ECDC4;
+    color: white;
+    padding: 0 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .add-meal-btn:hover {
+    background-color: #3ebbb2;
+  }
+  
+  .remove-meal-btn {
+    background-color: #FF6B6B;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .remove-meal-btn:hover {
+    background-color: #e05555;
+  }
+  
+  .plan-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .plan-category {
+    background-color: #ffe3e3;
+    color: #FF6B6B;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 768px) {
+    .plan-container {
+      flex-direction: column;
+    }
+    
+    .plan-form {
+      position: static;
+      flex: 1;
+    }
+    
+    .plan-meta {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
