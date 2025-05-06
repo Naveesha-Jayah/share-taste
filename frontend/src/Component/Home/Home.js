@@ -5,7 +5,7 @@ function Home() {
     container: {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       color: '#292F36',
-      lineHeight: 1.6,
+      lineHeight: 1.5,
     },
     header: {
       backgroundColor: 'white',
