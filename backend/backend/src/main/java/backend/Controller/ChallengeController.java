@@ -1,65 +1,75 @@
 package backend.Controller;
 
-
 import backend.Exception.ChallengeNotFoundException;
 import backend.Model.ChallengeModel;
 import backend.Repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
-@RequestMapping("/challenges")
+@RequestMapping("/api/challenges")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ChallengeController {
+
+    private final ChallengeRepository challengeRepository;
+
     @Autowired
-    private ChallengeRepository challengeRepository;
+    public ChallengeController(ChallengeRepository challengeRepository) {
+        this.challengeRepository = challengeRepository;
+    }
 
+    // Get all challenges
+    @GetMapping
+    public ResponseEntity<List<ChallengeModel>> getAllChallenges() {
+        return ResponseEntity.ok(challengeRepository.findAll());
+    }
+
+    // Create new challenge
     @PostMapping
-    public ChallengeModel newChallenge(@RequestBody ChallengeModel newChallenge) {
-        return challengeRepository.save(newChallenge);
+    public ResponseEntity<ChallengeModel> createChallenge(@RequestBody ChallengeModel challenge) {
+        ChallengeModel savedChallenge = challengeRepository.save(challenge);
+        return ResponseEntity.ok(savedChallenge);
     }
 
-    @GetMapping("/challenges")
-    List<ChallengeModel>getAllChalenge(){
-        return challengeRepository.findAll();
-    }
-    @GetMapping("/inventory/{id}")
-    ChallengeModel getchallangeID (@PathVariable Long id){
-        return challengeRepository.findById(id).orElseThrow(()-> new ChallengeNotFoundException(id));
+    // Get challenge by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ChallengeModel> getChallengeById(@PathVariable Long id) {
+        ChallengeModel challenge = challengeRepository.findById(id)
+                .orElseThrow(() -> new ChallengeNotFoundException(id));
+        return ResponseEntity.ok(challenge);
     }
 
-    @PutMapping("/challenges/{id}")
-    public ChallengeModel updateChallenge(
-            @RequestBody ChallengeModel updatedChallenge,
-            @PathVariable Long id
-    ) {
+    // Update challenge
+    @PutMapping("/{id}")
+    public ResponseEntity<ChallengeModel> updateChallenge(
+            @PathVariable Long id,
+            @RequestBody ChallengeModel challengeDetails) {
+
         return challengeRepository.findById(id)
                 .map(challenge -> {
-                    challenge.setChallengeTitle(updatedChallenge.getChallengeTitle());
-                    challenge.setChallengeDescription(updatedChallenge.getChallengeDescription());
-                    challenge.setCategory(updatedChallenge.getCategory());
-                    challenge.setDifficulty(updatedChallenge.getDifficulty());
-                    challenge.setStartDate(updatedChallenge.getStartDate());
-                    challenge.setEndDate(updatedChallenge.getEndDate());
-                    return challengeRepository.save(challenge);
+                    challenge.setChallengeTitle(challengeDetails.getChallengeTitle());
+                    challenge.setChallengeDescription(challengeDetails.getChallengeDescription());
+                    challenge.setCategory(challengeDetails.getCategory());
+                    challenge.setDifficulty(challengeDetails.getDifficulty());
+                    challenge.setStartDate(challengeDetails.getStartDate());
+                    challenge.setEndDate(challengeDetails.getEndDate());
+                    ChallengeModel updatedChallenge = challengeRepository.save(challenge);
+                    return ResponseEntity.ok(updatedChallenge);
                 })
                 .orElseThrow(() -> new ChallengeNotFoundException(id));
     }
 
-    @DeleteMapping("/challenges/{id}")
-    public String deleteChallenge(@PathVariable Long id) {
-        if (!challengeRepository.existsById(id)) {
-            throw new ChallengeNotFoundException(id);
-        }
-        challengeRepository.deleteById(id);
-        return "Challenge with id " + id + " has been deleted successfully.";
+    // Delete challenge
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteChallenge(@PathVariable Long id) {
+        return challengeRepository.findById(id)
+                .map(challenge -> {
+                    challengeRepository.delete(challenge);
+                    return ResponseEntity.ok().build();
+                })
+                .orElseThrow(() -> new ChallengeNotFoundException(id));
     }
-
-
-
-
-
-
 }
