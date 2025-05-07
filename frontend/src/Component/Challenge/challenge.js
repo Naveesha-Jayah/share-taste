@@ -24,7 +24,7 @@ const ChallengeForm = () => {
 
   const fetchChallenges = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/challenges/challenges');
+      const response = await axios.get('http://localhost:8081/api/challenges');
       setChallenges(response.data);
     } catch (error) {
       console.error('Error fetching challenges:', error);
@@ -40,10 +40,10 @@ const ChallengeForm = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:8081/challenges/challenges/${challenge.id}`, challenge);
+        await axios.put(`http://localhost:8081/api/challenges/${challenge.id}`, challenge);
         alert('Challenge Updated Successfully!');
       } else {
-        await axios.post('http://localhost:8081/challenges', challenge);
+        await axios.post('http://localhost:8081/api/challenges', challenge);
         alert('Challenge Created Successfully!');
       }
       resetForm();
@@ -71,7 +71,7 @@ const ChallengeForm = () => {
   const deleteChallenge = async (id) => {
     if (window.confirm('Are you sure you want to delete this challenge?')) {
       try {
-        await axios.delete(`http://localhost:8081/challenges/challenges/${id}`);
+        await axios.delete(`http://localhost:8081/api/challenges/${id}`);
         alert('Challenge deleted successfully!');
         fetchChallenges();
       } catch (error) {
