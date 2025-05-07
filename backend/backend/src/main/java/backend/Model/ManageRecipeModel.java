@@ -1,10 +1,7 @@
 package backend.Model;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,22 +18,49 @@ public class ManageRecipeModel {
     private String difficultyLevel;
     private String category;
 
-
-
     @ElementCollection
     private List<String> ingredients;
 
     @ElementCollection
     private List<String> instructions;
 
-    private String imagePath; // Store path to uploaded image
+    @ElementCollection
+    @CollectionTable(name = "recipe_media_items", joinColumns = @JoinColumn(name = "recipe_id"))
+    private List<MediaItem> mediaItems = new ArrayList<>();
+
     private String videoUrl;
 
-    public ManageRecipeModel(){
+    @Embeddable
+    public static class MediaItem {
+        private String path;
+        private String type;
+        private Long duration;
 
+        public MediaItem() {}
+
+        public MediaItem(String path, String type, Long duration) {
+            this.path = path;
+            this.type = type;
+            this.duration = duration;
+        }
+
+        public String getPath() { return path; }
+        public void setPath(String path) { this.path = path; }
+        
+        public String getType() { return type; }
+        public void setType(String type) { this.type = type; }
+        
+        public Long getDuration() { return duration; }
+        public void setDuration(Long duration) { this.duration = duration; }
     }
 
-    public ManageRecipeModel(Long id, String recipeName, String recipeDescription, Integer prepTime, Integer cookTime, Integer servings, String difficultyLevel, String category, List<String> ingredients, List<String> instructions, String imagePath, String videoUrl) {
+    public ManageRecipeModel() {
+    }
+
+    public ManageRecipeModel(Long id, String recipeName, String recipeDescription, Integer prepTime, 
+                           Integer cookTime, Integer servings, String difficultyLevel, String category, 
+                           List<String> ingredients, List<String> instructions, List<MediaItem> mediaItems, 
+                           String videoUrl) {
         this.id = id;
         this.recipeName = recipeName;
         this.recipeDescription = recipeDescription;
@@ -47,7 +71,7 @@ public class ManageRecipeModel {
         this.category = category;
         this.ingredients = ingredients;
         this.instructions = instructions;
-        this.imagePath = imagePath;
+        this.mediaItems = mediaItems;
         this.videoUrl = videoUrl;
     }
 
@@ -131,12 +155,12 @@ public class ManageRecipeModel {
         this.instructions = instructions;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public List<MediaItem> getMediaItems() {
+        return mediaItems;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setMediaItems(List<MediaItem> mediaItems) {
+        this.mediaItems = mediaItems;
     }
 
     public String getVideoUrl() {
