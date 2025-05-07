@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const RecipeForm = () => {
@@ -14,11 +14,12 @@ const RecipeForm = () => {
     category: 'Main Course',
     ingredients: [''],
     instructions: [''],
-    imagePath: '',
+    mediaItems: [],
     videoUrl: ''
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const videoRef = useRef(null);
 
   const categories = ['Main Course', 'Appetizer', 'Dessert', 'Salad', 'Soup', 'Breakfast'];
   const difficulties = ['Easy', 'Medium', 'Hard', 'Expert'];
@@ -73,25 +74,70 @@ const RecipeForm = () => {
     setRecipe({ ...recipe, instructions: newInstructions });
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setImageFile(file);
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await axios.post('http://localhost:8081/api/recipes/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      const filename = JSON.parse(response.data).filename;
-      setRecipe({ ...recipe, imagePath: filename });
-    } catch (error) {
-      console.error('Error uploading image:', error);
+  const handleMediaUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    
+    if (recipe.mediaItems.length + files.length > 3) {
+      alert('You can only upload up to 3 media files per recipe');
+      return;
     }
+
+    for (const file of files) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const isVideo = file.type.startsWith('video/');
+      formData.append('type', isVideo ? 'video' : 'photo');
+
+      if (isVideo) {
+        // Create video element to get duration
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+
+        await new Promise((resolve) => {
+          video.onloadedmetadata = () => {
+            URL.revokeObjectURL(video.src);
+            if (video.duration > 30) {
+              alert('Video must be 30 seconds or less');
+              resolve(false);
+            }
+            formData.append('duration', Math.round(video.duration));
+            resolve(true);
+          };
+          video.src = URL.createObjectURL(file);
+        });
+      }
+
+      try {
+        const response = await axios.post('http://localhost:8081/api/recipes/upload-media', 
+          formData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+            onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+              setUploadProgress(percentCompleted);
+            }
+          }
+        );
+
+        const { filename, type, duration } = response.data;
+        setRecipe(prev => ({
+          ...prev,
+          mediaItems: [...prev.mediaItems, { path: filename, type, duration }]
+        }));
+      } catch (error) {
+        console.error('Error uploading media:', error);
+        alert(error.response?.data?.error || 'Failed to upload media');
+      }
+    }
+    setUploadProgress(0);
+  };
+
+  const removeMedia = (index) => {
+    setRecipe(prev => ({
+      ...prev,
+      mediaItems: prev.mediaItems.filter((_, i) => i !== index)
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -124,7 +170,7 @@ const RecipeForm = () => {
       category: recipeToEdit.category,
       ingredients: [...recipeToEdit.ingredients],
       instructions: [...recipeToEdit.instructions],
-      imagePath: recipeToEdit.imagePath,
+      mediaItems: [...(recipeToEdit.mediaItems || [])],
       videoUrl: recipeToEdit.videoUrl
     });
     setIsEditing(true);
@@ -156,10 +202,10 @@ const RecipeForm = () => {
       category: 'Main Course',
       ingredients: [''],
       instructions: [''],
-      imagePath: '',
+      mediaItems: [],
       videoUrl: ''
     });
-    setImageFile(null);
+    setUploadProgress(0);
     setIsEditing(false);
   };
 
@@ -329,27 +375,56 @@ const RecipeForm = () => {
             </button>
           </div>
           
-          <div style={styles.formRow}>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Recipe Image:</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                style={styles.input}
-              />
-              {recipe.imagePath && (
-                <div style={styles.imagePreview}>
-                  <img 
-                    src={`http://localhost:8081/api/recipes/image/${recipe.imagePath}`} 
-                    alt="Preview" 
-                    style={styles.previewImage}
-                  />
-                  <span>{imageFile ? imageFile.name : recipe.imagePath}</span>
+          <div style={styles.formGroup}>
+            <label style={styles.label}>Media Files (Max 3):</label>
+            <input
+              type="file"
+              accept="image/*,video/*"
+              onChange={handleMediaUpload}
+              multiple
+              style={styles.input}
+              disabled={recipe.mediaItems.length >= 3}
+            />
+            {uploadProgress > 0 && (
+              <div style={styles.progressBar}>
+                <div 
+                  style={{
+                    ...styles.progressFill,
+                    width: `${uploadProgress}%`
+                  }}
+                />
+              </div>
+            )}
+            <div style={styles.mediaPreviewContainer}>
+              {recipe.mediaItems.map((media, index) => (
+                <div key={index} style={styles.mediaPreview}>
+                  {media.type === 'photo' ? (
+                    <img
+                      src={`http://localhost:8081/api/recipes/media/${media.path}`}
+                      alt="Preview"
+                      style={styles.previewImage}
+                    />
+                  ) : (
+                    <video
+                      ref={videoRef}
+                      src={`http://localhost:8081/api/recipes/media/${media.path}`}
+                      style={styles.previewVideo}
+                      controls
+                    />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => removeMedia(index)}
+                    style={styles.removeMediaBtn}
+                  >
+                    Remove
+                  </button>
                 </div>
-              )}
+              ))}
             </div>
-            
+          </div>
+          
+          <div style={styles.formRow}>
             <div style={styles.formGroup}>
               <label style={styles.label}>Video URL (optional):</label>
               <input
@@ -398,13 +473,25 @@ const RecipeForm = () => {
                   </div>
                 </div>
                 
-                {recipe.imagePath && (
-                  <div style={styles.recipeImage}>
-                    <img 
-                      src={`http://localhost:8081/api/recipes/image/${recipe.imagePath}`} 
-                      alt={recipe.recipeName}
-                      style={styles.thumbnailImage}
-                    />
+                {recipe.mediaItems && recipe.mediaItems.length > 0 && (
+                  <div style={styles.recipeMediaGrid}>
+                    {recipe.mediaItems.map((media, index) => (
+                      <div key={index} style={styles.recipeMedia}>
+                        {media.type === 'photo' ? (
+                          <img
+                            src={`http://localhost:8081/api/recipes/media/${media.path}`}
+                            alt={recipe.recipeName}
+                            style={styles.thumbnailImage}
+                          />
+                        ) : (
+                          <video
+                            src={`http://localhost:8081/api/recipes/media/${media.path}`}
+                            style={styles.thumbnailVideo}
+                            controls
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
                 )}
                 
@@ -708,24 +795,68 @@ const styles = {
     boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
     color: '#555',
   },
-  imagePreview: {
-    marginTop: '10px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+  progressBar: {
+    width: '100%',
+    height: '4px',
+    backgroundColor: '#f0f0f0',
+    borderRadius: '2px',
+    marginTop: '8px',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#4ECDC4',
+    borderRadius: '2px',
+    transition: 'width 0.3s ease-in-out',
+  },
+  mediaPreviewContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
     gap: '10px',
+    marginTop: '10px',
+  },
+  mediaPreview: {
+    position: 'relative',
+    borderRadius: '8px',
+    overflow: 'hidden',
   },
   previewImage: {
-    maxWidth: '100%',
-    maxHeight: '150px',
+    width: '100%',
+    height: '150px',
+    objectFit: 'cover',
     borderRadius: '8px',
   },
-  recipeImage: {
+  previewVideo: {
+    width: '100%',
+    height: '150px',
+    objectFit: 'cover',
+    borderRadius: '8px',
+  },
+  removeMediaBtn: {
+    position: 'absolute',
+    top: '5px',
+    right: '5px',
+    backgroundColor: 'rgba(255, 107, 107, 0.9)',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    padding: '4px 8px',
+    cursor: 'pointer',
+    fontSize: '12px',
+  },
+  recipeMediaGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+    gap: '15px',
     marginBottom: '15px',
   },
-  thumbnailImage: {
+  recipeMedia: {
+    borderRadius: '8px',
+    overflow: 'hidden',
+    aspectRatio: '16/9',
+  },
+  thumbnailVideo: {
     width: '100%',
-    maxHeight: '200px',
+    height: '100%',
     objectFit: 'cover',
     borderRadius: '8px',
   },
