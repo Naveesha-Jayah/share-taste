@@ -8,15 +8,33 @@
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Background overlay with reduced opacity */
+.app-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1); /* Reduced from 0.3 to 0.1 */
+  z-index: 0;
 }
 
 /* Form Section */
 .form-section {
-  width: 35%;
+  width: 30%;
+  
   padding: 40px;
-  background-color: rgba(255, 255, 255, 0.7); /* More transparent */
-  backdrop-filter: blur(3px); /* Subtle blur */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+  position: relative;
+  z-index: 1;
+  border: 2px solid rgba(231, 76, 60, 0.5); /* Add this line for border */
+  border-radius: 12px; /* Optional: to match the rounded corners of other elements */
 }
 
 .form-wrapper {
@@ -28,8 +46,21 @@
 .challenges-section {
   width: 65%;
   padding: 40px;
-  background-color: rgba(255, 255, 255, 0.75); /* Slightly more opaque than form */
+
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
   overflow-y: auto;
+  position: relative;
+  z-index: 1;
+}
+.challenges-section .section-title {
+  display: inline-block; /* Makes the background only as wide as the text */
+  padding: 8px 16px; /* Adds some space around the text */
+  background-color: rgb(240, 227, 227); /* White background */
+  color: #333; /* Dark text for contrast */
+  border-radius: 6px; /* Soft rounded corners */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  border-bottom: none; /* Removes the original red underline */
+  margin-bottom: 25px; /* Adjust spacing */
 }
 
 .challenges-container {
@@ -43,8 +74,8 @@
   color: #333;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #ff6b6b;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Improves readability */
+  border-bottom: 2px solid #e74c3c;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 /* Form Styles */
@@ -71,7 +102,7 @@
 
 .label {
   font-weight: 600;
-  color: #444; /* Slightly darker for better contrast */
+  color: #444;
   font-size: 14px;
 }
 
@@ -81,13 +112,13 @@
   border-radius: 8px;
   font-size: 14px;
   transition: all 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .input:focus {
   outline: none;
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 
 .textarea {
@@ -112,22 +143,22 @@
 }
 
 .submit-btn {
-  background-color: #ff6b6b;
+  background-color: #e74c3c;
   color: white;
 }
 
 .submit-btn:hover {
-  background-color: #ff5252;
+  background-color: #c0392b;
   transform: translateY(-2px);
 }
 
 .cancel-btn {
-  background-color: rgba(240, 240, 240, 0.8); /* Semi-transparent */
-  color: #555;
+  background-color: #95a5a6;
+  color: white;
 }
 
 .cancel-btn:hover {
-  background-color: rgba(224, 224, 224, 0.8);
+  background-color: #7f8c8d;
 }
 
 /* Challenges List Styles */
@@ -138,12 +169,12 @@
 }
 
 .challenge-item {
-  background: rgba(255, 255, 255, 0.85); /* Semi-transparent */
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  backdrop-filter: blur(2px); /* Subtle blur */
+  backdrop-filter: blur(2px);
 }
 
 .challenge-item:hover {
@@ -153,7 +184,7 @@
 
 .challenge-header {
   padding: 20px 20px 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .challenge-title {
@@ -174,7 +205,7 @@
   font-size: 12px;
   font-weight: 600;
   color: white;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Improves readability */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .challenge-meta {
@@ -183,7 +214,7 @@
   gap: 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 13px;
-  color: #555; /* Darker for better contrast */
+  color: #555;
 }
 
 .meta-item {
@@ -195,7 +226,7 @@
 .challenge-description {
   padding: 15px 20px;
   margin: 0;
-  color: #444; /* Darker for better contrast */
+  color: #444;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -218,21 +249,21 @@
 }
 
 .edit-btn {
-  background-color: rgba(119, 161, 211, 0.9); /* Semi-transparent */
+  background-color: #3498db;
   color: white;
 }
 
 .edit-btn:hover {
-  background-color: rgba(2, 29, 64, 0.9);
+  background-color: #2980b9;
 }
 
 .delete-btn {
-  background-color: rgba(228, 178, 178, 0.8);
-  color: #ff6b6b;
+  background-color: #e74c3c;
+  color: white;
 }
 
 .delete-btn:hover {
-  background-color: rgba(109, 10, 25, 0.8);
+  background-color: #c0392b;
 }
 
 .empty-state {
@@ -250,12 +281,12 @@
   .app-container {
     flex-direction: column;
   }
-  
+
   .form-section, .challenges-section {
     width: 100%;
     padding: 30px;
   }
-  
+
   .form-wrapper {
     max-width: 100%;
   }
@@ -266,11 +297,11 @@
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .challenges-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .form-section, .challenges-section {
     padding: 20px;
   }
