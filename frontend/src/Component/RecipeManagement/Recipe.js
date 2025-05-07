@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { ErrorBoundary } from 'react-error-boundary';
+import './Recipe.css';
 
 // Configure axios defaults
 axios.defaults.withCredentials = true;
@@ -8,12 +9,12 @@ axios.defaults.baseURL = 'http://localhost:8081';
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000';
 
 const ErrorFallback = ({ error, resetErrorBoundary }) => (
-  <div style={styles.errorContainer}>
+  <div className="error-container">
     <h2>Something went wrong</h2>
     <p>{error?.message || 'An unexpected error occurred'}</p>
     <button 
       onClick={resetErrorBoundary}
-      style={styles.retryButton}
+      className="retry-button"
     >
       Try Again
     </button>
@@ -309,8 +310,31 @@ const RecipeForm = () => {
     setIsEditing(false);
   };
 
+  // Helper functions for colors
+  const getCategoryColor = (category) => {
+    const colors = {
+      'Main Course': '#FF6B6B',
+      'Appetizer': '#4ECDC4',
+      'Dessert': '#A0E7A0',
+      'Salad': '#FFB347',
+      'Soup': '#77A1D3',
+      'Breakfast': '#C9A0DC'
+    };
+    return colors[category] || '#E0E0E0';
+  };
+
+  const getDifficultyColor = (difficulty) => {
+    const colors = {
+      'Easy': '#A0E7A0',
+      'Medium': '#FFB347',
+      'Hard': '#FF6B6B',
+      'Expert': '#C9A0DC'
+    };
+    return colors[difficulty] || '#E0E0E0';
+  };
+
   return (
-    <div style={styles.container}>
+    <div className="container">
       <ErrorBoundary
         FallbackComponent={ErrorFallback}
         onReset={() => {
@@ -331,11 +355,11 @@ const RecipeForm = () => {
           });
         }}
       >
-        <div style={styles.recipeForm}>
-          <h2 style={styles.sectionTitle}>{isEditing ? 'Edit Recipe' : 'Create New Recipe'}</h2>
-          <form onSubmit={handleSubmit} style={styles.form}>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Recipe Name:</label>
+        <div className="recipe-form">
+          <h2 className="section-title">{isEditing ? 'Edit Recipe' : 'Create New Recipe'}</h2>
+          <form onSubmit={handleSubmit} className="form">
+            <div className="form-group">
+              <label className="label">Recipe Name:</label>
               <input
                 type="text"
                 name="recipeName"
@@ -343,25 +367,25 @@ const RecipeForm = () => {
                 value={recipe.recipeName}
                 onChange={handleChange}
                 required
-                style={styles.input}
+                className="input"
               />
             </div>
             
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Description:</label>
+            <div className="form-group">
+              <label className="label">Description:</label>
               <textarea
                 name="recipeDescription"
                 placeholder="Describe your recipe..."
                 value={recipe.recipeDescription}
                 onChange={handleChange}
                 required
-                style={{...styles.input, minHeight: '100px'}}
+                className="input textarea"
               />
             </div>
             
-            <div style={styles.formRow}>
-              <div style={styles.formGroup}>
-                <label style={styles.label}>Prep Time (min):</label>
+            <div className="form-row">
+              <div className="form-group">
+                <label className="label">Prep Time (min):</label>
                 <input
                   type="number"
                   name="prepTime"
@@ -369,12 +393,12 @@ const RecipeForm = () => {
                   value={recipe.prepTime}
                   onChange={handleChange}
                   required
-                  style={styles.input}
+                  className="input"
                 />
               </div>
               
-              <div style={styles.formGroup}>
-                <label style={styles.label}>Cook Time (min):</label>
+              <div className="form-group">
+                <label className="label">Cook Time (min):</label>
                 <input
                   type="number"
                   name="cookTime"
@@ -382,12 +406,12 @@ const RecipeForm = () => {
                   value={recipe.cookTime}
                   onChange={handleChange}
                   required
-                  style={styles.input}
+                  className="input"
                 />
               </div>
               
-              <div style={styles.formGroup}>
-                <label style={styles.label}>Servings:</label>
+              <div className="form-group">
+                <label className="label">Servings:</label>
                 <input
                   type="number"
                   name="servings"
@@ -395,20 +419,20 @@ const RecipeForm = () => {
                   value={recipe.servings}
                   onChange={handleChange}
                   required
-                  style={styles.input}
+                  className="input"
                 />
               </div>
             </div>
             
-            <div style={styles.formRow}>
-              <div style={styles.formGroup}>
-                <label style={styles.label}>Category:</label>
+            <div className="form-row">
+              <div className="form-group">
+                <label className="label">Category:</label>
                 <select
                   name="category"
                   value={recipe.category}
                   onChange={handleChange}
                   required
-                  style={styles.input}
+                  className="input"
                 >
                   {categories.map((category, index) => (
                     <option key={index} value={category}>{category}</option>
@@ -416,14 +440,14 @@ const RecipeForm = () => {
                 </select>
               </div>
               
-              <div style={styles.formGroup}>
-                <label style={styles.label}>Difficulty:</label>
+              <div className="form-group">
+                <label className="label">Difficulty:</label>
                 <select
                   name="difficultyLevel"
                   value={recipe.difficultyLevel}
                   onChange={handleChange}
                   required
-                  style={styles.input}
+                  className="input"
                 >
                   {difficulties.map((difficulty, index) => (
                     <option key={index} value={difficulty}>{difficulty}</option>
@@ -432,22 +456,22 @@ const RecipeForm = () => {
               </div>
             </div>
             
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Ingredients:</label>
+            <div className="form-group">
+              <label className="label">Ingredients:</label>
               {recipe.ingredients.map((ingredient, index) => (
-                <div key={index} style={styles.listItem}>
+                <div key={index} className="list-item">
                   <input
                     type="text"
                     value={ingredient}
                     onChange={(e) => handleIngredientChange(index, e.target.value)}
                     required
-                    style={styles.input}
+                    className="input"
                     placeholder={`Ingredient ${index + 1}`}
                   />
                   {recipe.ingredients.length > 1 && (
                     <button
                       type="button"
-                      style={styles.removeItemBtn}
+                      className="remove-item-btn"
                       onClick={() => removeIngredient(index)}
                     >
                       ×
@@ -457,28 +481,28 @@ const RecipeForm = () => {
               ))}
               <button
                 type="button"
-                style={styles.addItemBtn}
+                className="add-item-btn"
                 onClick={addIngredient}
               >
                 + Add Ingredient
               </button>
             </div>
             
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Instructions:</label>
+            <div className="form-group">
+              <label className="label">Instructions:</label>
               {recipe.instructions.map((instruction, index) => (
-                <div key={index} style={styles.listItem}>
+                <div key={index} className="list-item">
                   <textarea
                     value={instruction}
                     onChange={(e) => handleInstructionChange(index, e.target.value)}
                     required
-                    style={{...styles.input, minHeight: '80px'}}
+                    className="input textarea"
                     placeholder={`Step ${index + 1}`}
                   />
                   {recipe.instructions.length > 1 && (
                     <button
                       type="button"
-                      style={styles.removeItemBtn}
+                      className="remove-item-btn"
                       onClick={() => removeInstruction(index)}
                     >
                       ×
@@ -488,21 +512,21 @@ const RecipeForm = () => {
               ))}
               <button
                 type="button"
-                style={styles.addItemBtn}
+                className="add-item-btn"
                 onClick={addInstruction}
               >
                 + Add Instruction Step
               </button>
             </div>
             
-            <div style={styles.formGroup}>
-              <label style={styles.label}>
+            <div className="form-group">
+              <label className="label">
                 Media Files (3 max, must include at least one video up to 30 seconds):
               </label>
-              <div style={styles.mediaRequirements}>
+              <div className="media-requirements">
                 <p>Media Requirements:</p>
                 <ul>
-                  <li style={mediaValidation.isValid ? styles.requirementMet : styles.requirementNotMet}>
+                  <li className={mediaValidation.isValid ? "requirement-met" : "requirement-not-met"}>
                     {mediaValidation.hasVideo ? 
                       '✓ One video uploaded (max 30 sec)' : 
                       (mediaValidation.photoCount > 0 ? 
@@ -516,42 +540,40 @@ const RecipeForm = () => {
                 accept="image/*,video/*"
                 onChange={handleMediaUpload}
                 multiple
-                style={styles.input}
+                className="input"
                 disabled={recipe.mediaItems.length >= 3}
               />
               {uploadProgress > 0 && (
-                <div style={styles.progressBar}>
+                <div className="progress-bar">
                   <div 
-                    style={{
-                      ...styles.progressFill,
-                      width: `${uploadProgress}%`
-                    }}
+                    className="progress-fill"
+                    style={{ width: `${uploadProgress}%` }}
                   />
                 </div>
               )}
-              <div style={styles.mediaPreviewContainer}>
+              <div className="media-preview-container">
                 {recipe.mediaItems.map((media, index) => (
-                  <div key={index} style={styles.mediaPreview}>
+                  <div key={index} className="media-preview">
                     {media.type === 'photo' ? (
                       <img
                         src={`http://localhost:8081/api/recipes/media/${media.path}`}
                         alt="Preview"
-                        style={styles.previewImage}
+                        className="preview-image"
                       />
                     ) : (
-                      <div style={styles.videoContainer}>
+                      <div className="video-container">
                         <video
                           src={`http://localhost:8081/api/recipes/media/${media.path}`}
-                          style={styles.previewVideo}
+                          className="preview-video"
                           controls
                         />
-                        <span style={styles.videoDuration}>{media.duration}s</span>
+                        <span className="video-duration">{media.duration}s</span>
                       </div>
                     )}
                     <button
                       type="button"
                       onClick={() => removeMedia(index)}
-                      style={styles.removeMediaBtn}
+                      className="remove-media-btn"
                     >
                       Remove {media.type}
                     </button>
@@ -560,26 +582,26 @@ const RecipeForm = () => {
               </div>
             </div>
             
-            <div style={styles.formRow}>
-              <div style={styles.formGroup}>
-                <label style={styles.label}>Video URL (optional):</label>
+            <div className="form-row">
+              <div className="form-group">
+                <label className="label">Video URL (optional):</label>
                 <input
                   type="url"
                   name="videoUrl"
                   placeholder="https://youtube.com/example"
                   value={recipe.videoUrl}
                   onChange={handleChange}
-                  style={styles.input}
+                  className="input"
                 />
               </div>
             </div>
             
-            <div style={styles.formActions}>
-              <button type="submit" style={styles.submitBtn}>
+            <div className="form-actions">
+              <button type="submit" className="submit-btn">
                 {isEditing ? 'Update Recipe' : 'Create Recipe'}
               </button>
               {isEditing && (
-                <button type="button" style={styles.cancelBtn} onClick={resetForm}>
+                <button type="button" className="cancel-btn" onClick={resetForm}>
                   Cancel
                 </button>
               )}
@@ -587,42 +609,42 @@ const RecipeForm = () => {
           </form>
         </div>
 
-        <div style={styles.recipesList}>
-          <h2 style={styles.sectionTitle}>Your Recipes</h2>
+        <div className="recipes-list">
+          <h2 className="section-title">Your Recipes</h2>
           {recipes.length === 0 ? (
-            <div style={styles.emptyState}>
+            <div className="empty-state">
               <p>No recipes available. Create your first recipe!</p>
             </div>
           ) : (
             <div>
               {recipes.map((recipe) => (
-                <div key={recipe.id} style={styles.recipeItem}>
-                  <div style={styles.recipeHeader}>
-                    <h3 style={styles.recipeTitle}>{recipe.recipeName}</h3>
-                    <div style={styles.tagContainer}>
-                      <span style={{...styles.recipeCategory, backgroundColor: getCategoryColor(recipe.category)}}>
+                <div key={recipe.id} className="recipe-item">
+                  <div className="recipe-header">
+                    <h3 className="recipe-title">{recipe.recipeName}</h3>
+                    <div className="tag-container">
+                      <span className="recipe-category" style={{ backgroundColor: getCategoryColor(recipe.category) }}>
                         {recipe.category}
                       </span>
-                      <span style={{...styles.recipeDifficulty, backgroundColor: getDifficultyColor(recipe.difficultyLevel)}}>
+                      <span className="recipe-difficulty" style={{ backgroundColor: getDifficultyColor(recipe.difficultyLevel) }}>
                         {recipe.difficultyLevel}
                       </span>
                     </div>
                   </div>
                   
                   {recipe.mediaItems && recipe.mediaItems.length > 0 && (
-                    <div style={styles.recipeMediaGrid}>
+                    <div className="recipe-media-grid">
                       {recipe.mediaItems.map((media, index) => (
-                        <div key={index} style={styles.recipeMedia}>
+                        <div key={index} className="recipe-media">
                           {media.type === 'photo' ? (
                             <img
                               src={`http://localhost:8081/api/recipes/media/${media.path}`}
                               alt={recipe.recipeName}
-                              style={styles.thumbnailImage}
+                              className="thumbnail-image"
                             />
                           ) : (
                             <video
                               src={`http://localhost:8081/api/recipes/media/${media.path}`}
-                              style={styles.thumbnailVideo}
+                              className="thumbnail-video"
                               controls
                             />
                           )}
@@ -631,50 +653,50 @@ const RecipeForm = () => {
                     </div>
                   )}
                   
-                  <div style={styles.recipeMeta}>
-                    <span style={styles.metaItem}>
+                  <div className="recipe-meta">
+                    <span className="meta-item">
                       <span>⏱️</span>
                       <span>Prep: {recipe.prepTime} min</span>
                     </span>
-                    <span style={styles.metaItem}>
+                    <span className="meta-item">
                       <span>🍳</span>
                       <span>Cook: {recipe.cookTime} min</span>
                     </span>
-                    <span style={styles.metaItem}>
+                    <span className="meta-item">
                       <span>🍽️</span>
                       <span>Servings: {recipe.servings}</span>
                     </span>
                   </div>
                   
-                  <p style={styles.recipeDescription}>{recipe.recipeDescription}</p>
+                  <p className="recipe-description">{recipe.recipeDescription}</p>
                   
-                  <div style={styles.recipeSection}>
-                    <h4 style={styles.sectionHeader}>Ingredients</h4>
-                    <ul style={styles.list}>
+                  <div className="recipe-section">
+                    <h4 className="section-header">Ingredients</h4>
+                    <ul className="list">
                       {recipe.ingredients.map((ingredient, i) => (
-                        <li key={i} style={styles.listItem}>{ingredient}</li>
+                        <li key={i} className="list-item">{ingredient}</li>
                       ))}
                     </ul>
                   </div>
                   
-                  <div style={styles.recipeSection}>
-                    <h4 style={styles.sectionHeader}>Instructions</h4>
-                    <ol style={styles.list}>
+                  <div className="recipe-section">
+                    <h4 className="section-header">Instructions</h4>
+                    <ol className="list">
                       {recipe.instructions.map((instruction, i) => (
-                        <li key={i} style={styles.listItem}>{instruction}</li>
+                        <li key={i} className="list-item">{instruction}</li>
                       ))}
                     </ol>
                   </div>
                   
-                  <div style={styles.recipeActions}>
+                  <div className="recipe-actions">
                     <button 
-                      style={styles.editBtn}
+                      className="edit-btn"
                       onClick={() => editRecipe(recipe)}
                     >
                       Edit
                     </button>
                     <button 
-                      style={styles.deleteBtn}
+                      className="delete-btn"
                       onClick={() => deleteRecipe(recipe.id)}
                     >
                       Delete
@@ -688,371 +710,6 @@ const RecipeForm = () => {
       </ErrorBoundary>
     </div>
   );
-};
-
-// Helper functions for colors
-const getCategoryColor = (category) => {
-  const colors = {
-    'Main Course': '#FF6B6B',
-    'Appetizer': '#4ECDC4',
-    'Dessert': '#A0E7A0',
-    'Salad': '#FFB347',
-    'Soup': '#77A1D3',
-    'Breakfast': '#C9A0DC'
-  };
-  return colors[category] || '#E0E0E0';
-};
-
-const getDifficultyColor = (difficulty) => {
-  const colors = {
-    'Easy': '#A0E7A0',
-    'Medium': '#FFB347',
-    'Hard': '#FF6B6B',
-    'Expert': '#C9A0DC'
-  };
-  return colors[difficulty] || '#E0E0E0';
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    gap: '20px',
-    maxWidth: '1400px',
-    margin: '0 auto',
-    padding: '20px',
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: '#F7FFF7',
-    minHeight: '100vh',
-  },
-  recipeForm: {
-    flex: '0 0 500px',
-    background: 'white',
-    borderRadius: '12px',
-    padding: '20px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    position: 'sticky',
-    top: '20px',
-    height: 'fit-content',
-    overflowY: 'auto',
-    maxHeight: '95vh',
-  },
-  recipesList: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-  },
-  sectionTitle: {
-    color: '#292F36',
-    fontSize: '22px',
-    marginBottom: '20px',
-    paddingBottom: '10px',
-    borderBottom: '2px solid #FF6B6B',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  formGroup: {
-    marginBottom: '20px',
-  },
-  formRow: {
-    display: 'flex',
-    gap: '20px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '8px',
-    fontWeight: 600,
-    color: '#292F36',
-  },
-  input: {
-    width: '100%',
-    padding: '12px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    fontSize: '15px',
-    backgroundColor: '#fff',
-    transition: 'border 0.3s',
-  },
-  listItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    marginBottom: '10px',
-  },
-  addItemBtn: {
-    padding: '8px 12px',
-    border: '1px dashed #ddd',
-    borderRadius: '8px',
-    backgroundColor: 'transparent',
-    cursor: 'pointer',
-    color: '#555',
-    fontSize: '14px',
-    marginTop: '5px',
-  },
-  removeItemBtn: {
-    padding: '5px 10px',
-    border: 'none',
-    borderRadius: '50%',
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: 'bold',
-  },
-  formActions: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '25px',
-  },
-  submitBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-    flex: 1,
-  },
-  cancelBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#e0e0e0',
-    color: '#555',
-  },
-  recipeItem: {
-    background: 'white',
-    borderRadius: '12px',
-    padding: '20px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    transition: 'transform 0.3s',
-  },
-  recipeTitle: {
-    margin: '0 0 15px 0',
-    color: '#292F36',
-    fontSize: '20px',
-    fontWeight: 700,
-  },
-  recipeDescription: {
-    margin: '8px 0',
-    color: '#555',
-    fontSize: '15px',
-    lineHeight: 1.5,
-  },
-  recipeSection: {
-    margin: '15px 0',
-  },
-  sectionHeader: {
-    margin: '10px 0',
-    color: '#292F36',
-    fontSize: '16px',
-  },
-  list: {
-    paddingLeft: '20px',
-    margin: '10px 0',
-  },
-  recipeActions: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '20px',
-  },
-  editBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#4ECDC4',
-    color: 'white',
-  },
-  deleteBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-  },
-  recipeMeta: {
-    display: 'flex',
-    gap: '15px',
-    marginBottom: '15px',
-    flexWrap: 'wrap',
-  },
-  metaItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '5px',
-    color: '#555',
-    fontSize: '14px',
-  },
-  recipeHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '15px',
-  },
-  recipeCategory: {
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: 600,
-  },
-  recipeDifficulty: {
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: 600,
-  },
-  tagContainer: {
-    display: 'flex',
-    gap: '10px',
-  },
-  emptyState: {
-    textAlign: 'center',
-    padding: '40px',
-    background: 'white',
-    borderRadius: '12px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    color: '#555',
-  },
-  progressBar: {
-    width: '100%',
-    height: '4px',
-    backgroundColor: '#f0f0f0',
-    borderRadius: '2px',
-    marginTop: '8px',
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: '#4ECDC4',
-    borderRadius: '2px',
-    transition: 'width 0.3s ease-in-out',
-  },
-  mediaPreviewContainer: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-    gap: '10px',
-    marginTop: '10px',
-  },
-  mediaPreview: {
-    position: 'relative',
-    borderRadius: '8px',
-    overflow: 'hidden',
-  },
-  previewImage: {
-    width: '100%',
-    height: '150px',
-    objectFit: 'cover',
-    borderRadius: '8px',
-  },
-  previewVideo: {
-    width: '100%',
-    height: '150px',
-    objectFit: 'cover',
-    borderRadius: '8px',
-  },
-  removeMediaBtn: {
-    position: 'absolute',
-    top: '5px',
-    right: '5px',
-    backgroundColor: 'rgba(255, 107, 107, 0.9)',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    padding: '4px 8px',
-    cursor: 'pointer',
-    fontSize: '12px',
-  },
-  recipeMediaGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-    gap: '15px',
-    marginBottom: '15px',
-  },
-  recipeMedia: {
-    borderRadius: '8px',
-    overflow: 'hidden',
-    aspectRatio: '16/9',
-  },
-  thumbnailVideo: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    borderRadius: '8px',
-  },
-  '@media (max-width: 768px)': {
-    container: {
-      flexDirection: 'column',
-    },
-    recipeForm: {
-      position: 'static',
-      flex: 1,
-      width: '100%',
-    },
-    formRow: {
-      flexDirection: 'column',
-      gap: '20px',
-    },
-  },
-  mediaRequirements: {
-    backgroundColor: '#f8f9fa',
-    padding: '10px',
-    borderRadius: '8px',
-    marginBottom: '10px',
-  },
-  requirementMet: {
-    color: '#28a745',
-  },
-  requirementNotMet: {
-    color: '#dc3545',
-  },
-  videoContainer: {
-    position: 'relative',
-  },
-  videoDuration: {
-    position: 'absolute',
-    bottom: '5px',
-    right: '5px',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    color: 'white',
-    padding: '2px 6px',
-    borderRadius: '4px',
-    fontSize: '12px',
-  },
-  errorContainer: {
-    padding: '20px',
-    backgroundColor: '#fff3f3',
-    border: '1px solid #ffcdd2',
-    borderRadius: '8px',
-    textAlign: 'center',
-    margin: '20px 0',
-  },
-  retryButton: {
-    backgroundColor: '#4ECDC4',
-    color: 'white',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginTop: '10px',
-  },
 };
 
 export default RecipeForm;
