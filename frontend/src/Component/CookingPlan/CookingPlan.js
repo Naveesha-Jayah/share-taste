@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './CookingPlan.css';
 
 const PlanForm = () => {
   const [plans, setPlans] = useState([]);
@@ -115,12 +116,12 @@ const PlanForm = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.planForm}>
-        <h2 style={styles.sectionTitle}>{isEditing ? 'Edit Plan' : 'Create New Plan'}</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Title:</label>
+    <div className="plan-container">
+      <div className="plan-form">
+        <h2 className="section-title">{isEditing ? 'Edit Plan' : 'Create New Plan'}</h2>
+        <form onSubmit={handleSubmit} className="form">
+          <div className="form-group">
+            <label className="label">Title:</label>
             <input
               type="text"
               name="planTitle"
@@ -128,30 +129,30 @@ const PlanForm = () => {
               value={plan.planTitle}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="input"
             />
           </div>
           
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Description:</label>
+          <div className="form-group">
+            <label className="label">Description:</label>
             <textarea
               name="planDescription"
               placeholder="Describe your plan..."
               value={plan.planDescription}
               onChange={handleChange}
               required
-              style={{...styles.input, minHeight: '120px'}}
+              className="input textarea"
             />
           </div>
           
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Duration:</label>
+          <div className="form-group">
+            <label className="label">Duration:</label>
             <select
               name="planDuration"
               value={plan.planDuration}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="input"
             >
               {durations.map((duration, index) => (
                 <option key={index} value={duration}>{duration}</option>
@@ -159,14 +160,14 @@ const PlanForm = () => {
             </select>
           </div>
           
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Difficulty:</label>
+          <div className="form-group">
+            <label className="label">Difficulty:</label>
             <select
               name="planDifficulty"
               value={plan.planDifficulty}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="input"
             >
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
@@ -174,14 +175,14 @@ const PlanForm = () => {
             </select>
           </div>
           
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Category:</label>
+          <div className="form-group">
+            <label className="label">Category:</label>
             <select
               name="planCategory"
               value={plan.planCategory}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="input"
             >
               {categories.map((category, index) => (
                 <option key={index} value={category}>{category}</option>
@@ -189,15 +190,15 @@ const PlanForm = () => {
             </select>
           </div>
           
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Meals:</label>
-            <div style={styles.mealList}>
+          <div className="form-group">
+            <label className="label">Meals:</label>
+            <div className="meal-list">
               {plan.meals.map((meal, index) => (
-                <div key={index} style={styles.mealItem}>
+                <div key={index} className="meal-item">
                   <span>{meal}</span>
                   <button
                     type="button"
-                    style={styles.removeMealBtn}
+                    className="remove-meal-btn"
                     onClick={() => removeMeal(index)}
                   >
                     ×
@@ -205,17 +206,17 @@ const PlanForm = () => {
                 </div>
               ))}
             </div>
-            <div style={styles.mealInputGroup}>
+            <div className="meal-input-group">
               <input
                 type="text"
                 placeholder="Enter meal details (e.g., Breakfast: Oatmeal)"
                 value={newMeal}
                 onChange={handleMealChange}
-                style={{...styles.input, flex: 1}}
+                className="input meal-input"
               />
               <button
                 type="button"
-                style={styles.addMealBtn}
+                className="add-meal-btn"
                 onClick={addMeal}
               >
                 Add
@@ -223,12 +224,12 @@ const PlanForm = () => {
             </div>
           </div>
           
-          <div style={styles.formActions}>
-            <button type="submit" style={styles.submitBtn}>
+          <div className="form-actions">
+            <button type="submit" className="submit-btn">
               {isEditing ? 'Update Plan' : 'Create Plan'}
             </button>
             {isEditing && (
-              <button type="button" style={styles.cancelBtn} onClick={resetForm}>
+              <button type="button" className="cancel-btn" onClick={resetForm}>
                 Cancel
               </button>
             )}
@@ -236,52 +237,52 @@ const PlanForm = () => {
         </form>
       </div>
 
-      <div style={styles.plansList}>
-        <h2 style={styles.sectionTitle}>Current Plans</h2>
+      <div className="plans-list">
+        <h2 className="section-title">Current Plans</h2>
         {plans.length === 0 ? (
           <p>No plans available. Create your first plan!</p>
         ) : (
           <div>
             {plans.map((plan) => (
-              <div key={plan.id} style={styles.planItem}>
-                <div style={styles.planHeader}>
-                  <h3 style={styles.planTitle}>{plan.planTitle}</h3>
-                  <span style={styles.planCategory}>{plan.planCategory}</span>
+              <div key={plan.id} className="plan-item">
+                <div className="plan-header">
+                  <h3 className="plan-title">{plan.planTitle}</h3>
+                  <span className="plan-category">{plan.planCategory}</span>
                 </div>
                 
-                <div style={styles.planMeta}>
-                  <span style={styles.metaItem}>
+                <div className="plan-meta">
+                  <span className="meta-item">
                     <span>⏱️</span>
                     <span>{plan.planDuration}</span>
                   </span>
-                  <span style={styles.metaItem}>
+                  <span className="meta-item">
                     <span>🔥</span>
                     <span>{plan.planDifficulty}</span>
                   </span>
                 </div>
                 
-                <p style={styles.planDescription}>{plan.planDescription}</p>
+                <p className="plan-description">{plan.planDescription}</p>
                 
                 {plan.meals && plan.meals.length > 0 && (
-                  <div style={styles.mealList}>
+                  <div className="meal-list">
                     <p><strong>Meals:</strong></p>
                     {plan.meals.map((meal, index) => (
-                      <div key={index} style={styles.mealItem}>
+                      <div key={index} className="meal-item">
                         <span>{meal}</span>
                       </div>
                     ))}
                   </div>
                 )}
                 
-                <div style={styles.planActions}>
+                <div className="plan-actions">
                   <button 
-                    style={styles.editBtn}
+                    className="edit-btn"
                     onClick={() => editPlan(plan)}
                   >
                     Edit
                   </button>
                   <button 
-                    style={styles.deleteBtn}
+                    className="delete-btn"
                     onClick={() => deletePlan(plan.id)}
                   >
                     Delete
@@ -294,216 +295,6 @@ const PlanForm = () => {
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    gap: '20px',
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '20px',
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: '#F7FFF7',
-    minHeight: '100vh',
-  },
-  planForm: {
-    flex: '0 0 350px',
-    background: 'white',
-    borderRadius: '12px',
-    padding: '20px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    position: 'sticky',
-    top: '20px',
-    height: 'fit-content',
-  },
-  plansList: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-  },
-  sectionTitle: {
-    color: '#292F36',
-    fontSize: '22px',
-    marginBottom: '20px',
-    paddingBottom: '10px',
-    borderBottom: '2px solid #FF6B6B',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  formGroup: {
-    marginBottom: '20px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '8px',
-    fontWeight: 600,
-    color: '#292F36',
-  },
-  input: {
-    width: '100%',
-    padding: '12px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    fontSize: '15px',
-    backgroundColor: '#fff',
-    transition: 'border 0.3s',
-  },
-  formActions: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '25px',
-  },
-  submitBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-    flex: 1,
-  },
-  cancelBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#e0e0e0',
-    color: '#555',
-  },
-  planItem: {
-    background: 'white',
-    borderRadius: '12px',
-    padding: '20px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-    transition: 'transform 0.3s',
-  },
-  planTitle: {
-    margin: '0 0 15px 0',
-    color: '#292F36',
-    fontSize: '20px',
-    fontWeight: 700,
-  },
-  planDescription: {
-    margin: '8px 0',
-    color: '#555',
-    fontSize: '15px',
-    lineHeight: 1.5,
-  },
-  planActions: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '20px',
-  },
-  editBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#4ECDC4',
-    color: 'white',
-  },
-  deleteBtn: {
-    padding: '12px 18px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    fontSize: '15px',
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-  },
-  mealList: {
-    marginTop: '15px',
-    background: '#f8f9fa',
-    borderRadius: '8px',
-    padding: '10px',
-  },
-  mealItem: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px',
-    borderBottom: '1px solid #eee',
-    background: 'white',
-    marginBottom: '8px',
-    borderRadius: '6px',
-  },
-  mealInputGroup: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '15px',
-  },
-  addMealBtn: {
-    backgroundColor: '#4ECDC4',
-    color: 'white',
-    padding: '0 15px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: 600,
-    cursor: 'pointer',
-  },
-  removeMealBtn: {
-    backgroundColor: '#FF6B6B',
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    border: 'none',
-    cursor: 'pointer',
-  },
-  planMeta: {
-    display: 'flex',
-    gap: '15px',
-    marginBottom: '15px',
-  },
-  metaItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '5px',
-    color: '#555',
-    fontSize: '14px',
-  },
-  planHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '15px',
-  },
-  planCategory: {
-    backgroundColor: '#ffe3e3',
-    color: '#FF6B6B',
-    padding: '5px 10px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: 600,
-  },
-  '@media (max-width: 768px)': {
-    container: {
-      flexDirection: 'column',
-    },
-    planForm: {
-      position: 'static',
-      flex: 1,
-    },
-    planMeta: {
-      flexDirection: 'column',
-      gap: '8px',
-    },
-  },
 };
 
 export default PlanForm;
