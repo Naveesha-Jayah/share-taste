@@ -16,6 +16,7 @@ function App() {
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/recipe" element={<Recipe />} />
        
+       
         </Routes>
       </React.Fragment>
 
