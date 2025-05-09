@@ -1,4 +1,4 @@
-package main.java.backend.Controller;
+package backend.Controller;
 
 import backend.Model.User;
 import backend.Service.UserService;
