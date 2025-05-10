@@ -4,6 +4,7 @@ import Home from "./Component/Home/Home"
 import Plan from "./Component/CookingPlan/CookingPlan"
 import Challenge from "./Component/Challenge/challenge"
 import Recipe from "./Component/RecipeManagement/Recipe"
+import Page from "./Component/Other/page"
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/plan" element={<Plan />} />
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/recipe" element={<Recipe />} />
+        <Route path="/page" element={<Page />} />
        
        
         </Routes>
