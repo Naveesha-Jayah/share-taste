@@ -6,9 +6,9 @@ function Community() {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       color: '#292F36',
       lineHeight: 1.5,
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '2rem',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
     },
     header: {
       backgroundColor: 'white',
@@ -25,6 +25,7 @@ function Community() {
       maxWidth: '1200px',
       margin: '0 auto',
       padding: '0 2rem',
+      width: '100%',
     },
     logo: {
       fontSize: '1.8rem',
@@ -42,6 +43,10 @@ function Community() {
       textDecoration: 'none',
       color: '#292F36',
       fontWeight: 500,
+      transition: 'color 0.2s ease',
+      ':hover': {
+        color: '#FF6B6B',
+      }
     },
     authButtons: {
       display: 'flex',
@@ -58,114 +63,159 @@ function Community() {
     btnPrimary: {
       backgroundColor: '#FF6B6B',
       color: 'white',
+      ':hover': {
+        backgroundColor: '#e55a5a',
+      }
     },
     btnOutline: {
       backgroundColor: 'transparent',
       border: '2px solid #FF6B6B',
       color: '#FF6B6B',
+      ':hover': {
+        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+      }
     },
     hero: {
       textAlign: 'center',
-      padding: '4rem 2rem',
-      marginBottom: '2rem',
-      borderRadius: '8px',
-      backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80")',
+      padding: '6rem 2rem',
+      backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
+      backgroundAttachment: 'fixed',
       color: 'white',
       position: 'relative',
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     heroTitle: {
-      fontSize: '2.5rem',
-      marginBottom: '1rem',
+      fontSize: '3rem',
+      marginBottom: '1.5rem',
       color: 'white',
-      textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
+      textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
     },
     heroSubtitle: {
-      fontSize: '1.2rem',
-      margin: '0 auto 2rem',
+      fontSize: '1.4rem',
+      margin: '0 auto 3rem',
       color: 'rgba(255,255,255,0.9)',
       maxWidth: '800px',
       textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
     },
+    mainContent: {
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '2rem',
+      width: '100%',
+      flex: 1,
+    },
     sectionTitle: {
-      fontSize: '2rem',
+      fontSize: '2.2rem',
       marginBottom: '2rem',
       color: '#292F36',
-      borderBottom: '2px solid #4ECDC4',
+      borderBottom: '3px solid #4ECDC4',
       paddingBottom: '0.5rem',
       display: 'inline-block',
     },
     searchBar: {
       display: 'flex',
-      marginBottom: '2rem',
+      margin: '2rem auto 3rem',
+      maxWidth: '800px',
     },
     searchInput: {
       flex: 1,
-      padding: '0.8rem',
+      padding: '1rem',
       border: '1px solid #ddd',
       borderRadius: '4px 0 0 4px',
       fontSize: '1rem',
+      outline: 'none',
+      transition: 'border 0.3s ease',
+      ':focus': {
+        borderColor: '#4ECDC4',
+      }
     },
     searchButton: {
-      padding: '0.8rem 1.5rem',
+      padding: '0 2rem',
       backgroundColor: '#4ECDC4',
       color: 'white',
       border: 'none',
       borderRadius: '0 4px 4px 0',
       cursor: 'pointer',
       fontWeight: 600,
+      transition: 'background-color 0.3s ease',
+      ':hover': {
+        backgroundColor: '#3dbeb5',
+      }
     },
     communityGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
       gap: '2rem',
-      marginBottom: '3rem',
+      marginBottom: '4rem',
     },
     communityCard: {
       backgroundColor: 'white',
       borderRadius: '8px',
       overflow: 'hidden',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-      transition: 'transform 0.3s ease',
+      boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+      transition: 'all 0.3s ease',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
       ':hover': {
-        transform: 'translateY(-5px)',
+        transform: 'translateY(-10px)',
+        boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
       },
     },
     cardHeader: {
-      padding: '1.5rem',
+      padding: '1.8rem',
       borderBottom: '1px solid #eee',
     },
     cardTitle: {
-      fontSize: '1.3rem',
-      marginBottom: '0.5rem',
+      fontSize: '1.5rem',
+      marginBottom: '0.8rem',
       color: '#292F36',
     },
     cardSubtitle: {
       color: '#666',
-      fontSize: '0.9rem',
+      fontSize: '1rem',
+      lineHeight: 1.6,
     },
     cardBody: {
-      padding: '1.5rem',
+      padding: '1.8rem',
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
     },
     cardStats: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '1rem',
+      marginTop: 'auto',
       color: '#666',
+      paddingTop: '1rem',
     },
     stat: {
       display: 'flex',
       alignItems: 'center',
       gap: '0.5rem',
+      fontSize: '0.95rem',
     },
     discussionList: {
       listStyle: 'none',
       padding: 0,
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+      overflow: 'hidden',
     },
     discussionItem: {
-      padding: '1.5rem',
+      padding: '1.8rem',
       borderBottom: '1px solid #eee',
+      transition: 'background-color 0.2s ease',
+      ':hover': {
+        backgroundColor: 'rgba(78, 205, 196, 0.05)',
+      },
       ':last-child': {
         borderBottom: 'none',
       },
@@ -176,40 +226,51 @@ function Community() {
       marginBottom: '1rem',
     },
     avatar: {
-      width: '40px',
-      height: '40px',
+      width: '50px',
+      height: '50px',
       borderRadius: '50%',
-      marginRight: '1rem',
+      marginRight: '1.2rem',
       objectFit: 'cover',
+      border: '2px solid #4ECDC4',
     },
     discussionTitle: {
-      fontSize: '1.1rem',
+      fontSize: '1.3rem',
       fontWeight: 600,
       marginBottom: '0.5rem',
+      color: '#292F36',
     },
     discussionMeta: {
       display: 'flex',
-      gap: '1rem',
+      gap: '1.5rem',
       color: '#666',
-      fontSize: '0.9rem',
+      fontSize: '0.95rem',
     },
     footer: {
       backgroundColor: '#292F36',
       color: 'white',
-      padding: '2rem',
+      padding: '3rem 2rem',
       textAlign: 'center',
-      marginTop: '3rem',
+      marginTop: 'auto',
     },
     footerLinks: {
       display: 'flex',
       justifyContent: 'center',
-      gap: '1rem',
-      marginTop: '1rem',
+      gap: '2rem',
+      margin: '1.5rem 0',
     },
     footerLink: {
       color: 'white',
       textDecoration: 'none',
+      transition: 'color 0.2s ease',
+      ':hover': {
+        color: '#4ECDC4',
+      }
     },
+    ctaButtons: {
+      display: 'flex',
+      gap: '1.5rem',
+      justifyContent: 'center',
+    }
   };
 
   // Sample data
@@ -234,6 +295,13 @@ function Community() {
       members: 2100,
       discussions: 587,
       description: 'For busy people who want to make delicious meals in no time.'
+    },
+    {
+      id: 4,
+      name: 'International Cuisine',
+      members: 1750,
+      discussions: 421,
+      description: 'Explore flavors from around the world and share your global recipes.'
     }
   ];
 
@@ -269,6 +337,14 @@ function Community() {
       avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
       replies: 18,
       lastActivity: '1 day ago'
+    },
+    {
+      id: 5,
+      title: 'How to properly sharpen kitchen knives?',
+      author: 'Lisa Wong',
+      avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+      replies: 31,
+      lastActivity: '2 days ago'
     }
   ];
 
@@ -281,7 +357,7 @@ function Community() {
             <a href="/recipe" style={styles.navLink}>Recipes</a>
             <a href="/challenge" style={styles.navLink}>Challenges</a>
             <a href="/plan" style={styles.navLink}>Meal Plans</a>
-            <a href="/community" style={{...styles.navLink, color: '#FF6B6B'}}>Community</a>
+            <a href="/community" style={{...styles.navLink, color: '#FF6B6B', fontWeight: 600}}>Community</a>
           </div>
           <div style={styles.authButtons}>
             <button style={{...styles.btn, ...styles.btnOutline}}>Log In</button>
@@ -290,19 +366,33 @@ function Community() {
         </nav>
       </header>
 
-      <main>
-        <section style={styles.hero}>
-          <h1 style={styles.heroTitle}>TasteShare Community</h1>
-          <p style={styles.heroSubtitle}>
-            Connect with fellow food enthusiasts, share your culinary experiences, and get inspired by others.
-            Join discussions, ask questions, and be part of our growing community.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <button style={{...styles.btn, ...styles.btnPrimary, padding: '0.8rem 2rem'}}>Start a Discussion</button>
-            <button style={{...styles.btn, ...styles.btnOutline, padding: '0.8rem 2rem', borderColor: 'white', color: 'white'}}>Browse All Communities</button>
-          </div>
-        </section>
+      <section style={styles.hero}>
+        <h1 style={styles.heroTitle}>TasteShare Community</h1>
+        <p style={styles.heroSubtitle}>
+          Connect with fellow food enthusiasts, share your culinary experiences, and get inspired by others.
+          Join discussions, ask questions, and be part of our growing community.
+        </p>
+        <div style={styles.ctaButtons}>
+          <button style={{...styles.btn, ...styles.btnPrimary, padding: '1rem 2.5rem', fontSize: '1.1rem'}}>
+            Start a Discussion
+          </button>
+          <button style={{
+            ...styles.btn,
+            ...styles.btnOutline,
+            padding: '1rem 2.5rem',
+            fontSize: '1.1rem',
+            borderColor: 'white',
+            color: 'white',
+            ':hover': {
+              backgroundColor: 'rgba(255,255,255,0.1)'
+            }
+          }}>
+            Browse All Communities
+          </button>
+        </div>
+      </section>
 
+      <main style={styles.mainContent}>
         <div style={styles.searchBar}>
           <input 
             type="text" 
@@ -326,7 +416,13 @@ function Community() {
                     <div style={styles.stat}>👥 {community.members.toLocaleString()} members</div>
                     <div style={styles.stat}>💬 {community.discussions.toLocaleString()} discussions</div>
                   </div>
-                  <button style={{...styles.btn, ...styles.btnPrimary, width: '100%', marginTop: '1rem'}}>
+                  <button style={{
+                    ...styles.btn,
+                    ...styles.btnPrimary,
+                    width: '100%',
+                    marginTop: '1.5rem',
+                    padding: '0.8rem'
+                  }}>
                     Join Community
                   </button>
                 </div>
@@ -359,14 +455,20 @@ function Community() {
 
       <footer style={styles.footer}>
         <div>
-          <div style={styles.logo}>Taste<span style={styles.logoSpan}>Share</span></div>
+          <div style={{...styles.logo, fontSize: '2rem', marginBottom: '1rem'}}>
+            Taste<span style={styles.logoSpan}>Share</span>
+          </div>
           <div style={styles.footerLinks}>
             <a href="/about" style={styles.footerLink}>About</a>
             <a href="/contact" style={styles.footerLink}>Contact</a>
             <a href="/privacy" style={styles.footerLink}>Privacy</a>
             <a href="/terms" style={styles.footerLink}>Terms</a>
+            <a href="/blog" style={styles.footerLink}>Blog</a>
+            <a href="/faq" style={styles.footerLink}>FAQ</a>
           </div>
-          <p style={{ marginTop: '1rem' }}>© {new Date().getFullYear()} TasteShare. All rights reserved.</p>
+          <p style={{ marginTop: '1.5rem', opacity: 0.8 }}>
+            © {new Date().getFullYear()} TasteShare. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>
