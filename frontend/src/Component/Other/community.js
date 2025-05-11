@@ -357,19 +357,6 @@ function Community() {
           <button style={{...styles.btn, ...styles.btnPrimary, padding: '1rem 2.5rem', fontSize: '1.1rem'}}>
             Start a Discussion
           </button>
-          <button style={{
-            ...styles.btn,
-            ...styles.btnOutline,
-            padding: '1rem 2.5rem',
-            fontSize: '1.1rem',
-            borderColor: 'white',
-            color: 'white',
-            ':hover': {
-              backgroundColor: 'rgba(255,255,255,0.1)'
-            }
-          }}>
-            Browse All Communities
-          </button>
         </div>
       </section>
 
