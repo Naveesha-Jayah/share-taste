@@ -137,7 +137,7 @@ function Community() {
     },
     searchButton: {
       padding: '0 2rem',
-      backgroundColor: '#4ECDC4',
+      backgroundColor: '#1a237e', // Dark blue color
       color: 'white',
       border: 'none',
       borderRadius: '0 4px 4px 0',
@@ -145,7 +145,7 @@ function Community() {
       fontWeight: 600,
       transition: 'background-color 0.3s ease',
       ':hover': {
-        backgroundColor: '#3dbeb5',
+        backgroundColor: '#0d1542',
       }
     },
     communityGrid: {
