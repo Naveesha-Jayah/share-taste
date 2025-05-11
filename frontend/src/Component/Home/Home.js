@@ -1,11 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
+  
   const styles = {
     container: {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       color: '#292F36',
       lineHeight: 1.5,
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
     },
     header: {
       backgroundColor: 'white',
@@ -62,63 +68,85 @@ function Home() {
       color: '#FF6B6B',
     },
     hero: {
-      textAlign: 'center',
-      padding: '4rem 2rem',
-      backgroundColor: '#F7FFF7',
-      backgroundImage: 'url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80")',
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundImage: 'linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       color: 'white',
-      textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
+      textAlign: 'center',
+      padding: '4rem 2rem',
     },
     heroContent: {
       maxWidth: '800px',
       margin: '0 auto',
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      padding: '2rem',
-      borderRadius: '8px'
     },
     heroTitle: {
-      fontSize: '3rem',
-      marginBottom: '1rem',
+      fontSize: '3.5rem',
+      marginBottom: '1.5rem',
+      textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
     },
     heroSubtitle: {
-      fontSize: '1.2rem',
-      margin: '0 auto 2rem',
+      fontSize: '1.5rem',
+      margin: '0 auto 3rem',
+      textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
     },
-    section: {
-      padding: '3rem 2rem',
+    features: {
+      padding: '4rem 2rem',
       maxWidth: '1200px',
       margin: '0 auto',
-    },
-    sectionTitle: {
       textAlign: 'center',
+    },
+    featuresTitle: {
+      fontSize: '2.5rem',
       marginBottom: '2rem',
+      color: '#292F36',
     },
-    cardContainer: {
+    featuresGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
       gap: '2rem',
+      marginTop: '3rem',
     },
-    card: {
-      backgroundColor: 'white',
+    featureCard: {
+      padding: '2rem',
       borderRadius: '8px',
-      overflow: 'hidden',
+      backgroundColor: 'white',
       boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-      transition: 'transform 0.3s ease',
     },
-    cardImage: {
-      width: '100%',
-      height: '200px',
-      objectFit: 'cover',
+    featureIcon: {
+      fontSize: '2.5rem',
+      marginBottom: '1rem',
+      color: '#FF6B6B',
     },
-    cardContent: {
-      padding: '1.5rem',
+    featureTitle: {
+      fontSize: '1.5rem',
+      marginBottom: '1rem',
+      color: '#292F36',
     },
-    cardStats: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: '1rem',
+    featureText: {
+      color: '#666',
+    },
+    ctaSection: {
+      backgroundColor: '#F7FFF7',
+      padding: '4rem 2rem',
+      textAlign: 'center',
+    },
+    ctaContent: {
+      maxWidth: '800px',
+      margin: '0 auto',
+    },
+    ctaTitle: {
+      fontSize: '2.5rem',
+      marginBottom: '1.5rem',
+      color: '#292F36',
+    },
+    ctaText: {
+      fontSize: '1.2rem',
+      marginBottom: '2rem',
       color: '#666',
     },
     footer: {
@@ -139,14 +167,8 @@ function Home() {
     },
   };
 
-  // Image URLs from Unsplash
-  const images = {
-    recipe1: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
-    recipe2: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
-    challenge1: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
-    challenge2: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
-    mealplan1: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80',
-    mealplan2: 'https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'
+  const handleGetStarted = () => {
+    navigate('/page');
   };
 
   return (
@@ -172,79 +194,51 @@ function Home() {
           <div style={styles.heroContent}>
             <h1 style={styles.heroTitle}>Discover & Share Culinary Delights</h1>
             <p style={styles.heroSubtitle}>Join TasteShare to explore recipes, participate in challenges, and connect with food enthusiasts worldwide</p>
-            <button style={{...styles.btn, ...styles.btnPrimary}}>Get Started</button>
-          </div>
-        </section>
-
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>Featured Recipes</h2>
-          <div style={styles.cardContainer}>
-            <div style={styles.card}>
-              <img src={images.recipe1} alt="Spicy Thai Noodles" style={styles.cardImage} />
-              <div style={styles.cardContent}>
-                <h3>Spicy Thai Noodles</h3>
-                <p>By Chef Maria</p>
-                <div style={styles.cardStats}>
-                  <span>❤️ 120</span>
-                  <span>💬 24</span>
-                </div>
-              </div>
-            </div>
-            <div style={styles.card}>
-              <img src={images.recipe2} alt="Avocado Toast" style={styles.cardImage} />
-              <div style={styles.cardContent}>
-                <h3>Avocado Toast</h3>
-                <p>By Home Cook Jamie</p>
-                <div style={styles.cardStats}>
-                  <span>❤️ 95</span>
-                  <span>💬 18</span>
-                </div>
-              </div>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <button 
+                onClick={handleGetStarted}
+                style={{...styles.btn, ...styles.btnPrimary, padding: '0.8rem 2rem'}}
+              >
+                Get Started
+              </button>
+              <button style={{...styles.btn, ...styles.btnOutline, padding: '0.8rem 2rem', borderColor: 'white', color: 'white'}}>
+                Learn More
+              </button>
             </div>
           </div>
         </section>
 
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>Current Challenges</h2>
-          <div style={styles.cardContainer}>
-            <div style={styles.card}>
-              <img src={images.challenge1} alt="30-Minute Meals" style={styles.cardImage} />
-              <div style={styles.cardContent}>
-                <h3>30-Minute Meals</h3>
-                <p>Ends in 5 days</p>
-                <button style={{...styles.btn, ...styles.btnPrimary, width: '100%'}}>Join Challenge</button>
-              </div>
+        <section style={styles.features}>
+          <h2 style={styles.featuresTitle}>Why Choose TasteShare?</h2>
+          <div style={styles.featuresGrid}>
+            <div style={styles.featureCard}>
+              <div style={styles.featureIcon}>🍳</div>
+              <h3 style={styles.featureTitle}>Discover Recipes</h3>
+              <p style={styles.featureText}>Find thousands of recipes from professional chefs and home cooks alike.</p>
             </div>
-            <div style={styles.card}>
-              <img src={images.challenge2} alt="Vegetarian Week" style={styles.cardImage} />
-              <div style={styles.cardContent}>
-                <h3>Vegetarian Week</h3>
-                <p>Ongoing</p>
-                <button style={{...styles.btn, ...styles.btnPrimary, width: '100%'}}>Join Challenge</button>
-              </div>
+            <div style={styles.featureCard}>
+              <div style={styles.featureIcon}>🏆</div>
+              <h3 style={styles.featureTitle}>Join Challenges</h3>
+              <p style={styles.featureText}>Participate in cooking challenges and showcase your culinary skills.</p>
+            </div>
+            <div style={styles.featureCard}>
+              <div style={styles.featureIcon}>📅</div>
+              <h3 style={styles.featureTitle}>Meal Planning</h3>
+              <p style={styles.featureText}>Create and share meal plans to stay organized and eat healthier.</p>
+            </div>
+            <div style={styles.featureCard}>
+              <div style={styles.featureIcon}>👥</div>
+              <h3 style={styles.featureTitle}>Community</h3>
+              <p style={styles.featureText}>Connect with other food lovers and share your culinary creations.</p>
             </div>
           </div>
         </section>
 
-        <section style={styles.section}>
-          <h2 style={styles.sectionTitle}>Popular Meal Plans</h2>
-          <div style={styles.cardContainer}>
-            <div style={styles.card}>
-              <img src={images.mealplan1} alt="7-Day Keto Plan" style={styles.cardImage} />
-              <div style={styles.cardContent}>
-                <h3>7-Day Keto Plan</h3>
-                <p>By Nutrition Expert</p>
-                <button style={{...styles.btn, ...styles.btnPrimary, width: '100%'}}>View Plan</button>
-              </div>
-            </div>
-            <div style={styles.card}>
-              <img src={images.mealplan2} alt="Family Dinners" style={styles.cardImage} />
-              <div style={styles.cardContent}>
-                <h3>Family Dinners</h3>
-                <p>By Home Chef</p>
-                <button style={{...styles.btn, ...styles.btnPrimary, width: '100%'}}>View Plan</button>
-              </div>
-            </div>
+        <section style={styles.ctaSection}>
+          <div style={styles.ctaContent}>
+            <h2 style={styles.ctaTitle}>Ready to start your culinary journey?</h2>
+            <p style={styles.ctaText}>Join thousands of food enthusiasts who are already sharing and discovering amazing recipes and meal plans.</p>
+            <button style={{...styles.btn, ...styles.btnPrimary, padding: '0.8rem 2rem', fontSize: '1.1rem'}}>Sign Up Now</button>
           </div>
         </section>
       </main>
@@ -258,6 +252,7 @@ function Home() {
             <a href="/privacy" style={styles.footerLink}>Privacy</a>
             <a href="/terms" style={styles.footerLink}>Terms</a>
           </div>
+          <p style={{ marginTop: '1rem' }}>© {new Date().getFullYear()} TasteShare. All rights reserved.</p>
         </div>
       </footer>
     </div>

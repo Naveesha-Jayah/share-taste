@@ -5,6 +5,7 @@ import Plan from "./Component/CookingPlan/CookingPlan"
 import Challenge from "./Component/Challenge/challenge"
 import Recipe from "./Component/RecipeManagement/Recipe"
 import Page from "./Component/Other/page"
+import Community from "./Component/Other/community"
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/recipe" element={<Recipe />} />
         <Route path="/page" element={<Page />} />
+        <Route path="/community" element={<Community />} />
        
        
         </Routes>
