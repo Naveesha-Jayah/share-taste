@@ -67,20 +67,26 @@ function Community() {
     hero: {
       textAlign: 'center',
       padding: '4rem 2rem',
-      backgroundColor: '#F7FFF7',
       marginBottom: '2rem',
       borderRadius: '8px',
+      backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      color: 'white',
+      position: 'relative',
     },
     heroTitle: {
       fontSize: '2.5rem',
       marginBottom: '1rem',
-      color: '#292F36',
+      color: 'white',
+      textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
     },
     heroSubtitle: {
       fontSize: '1.2rem',
       margin: '0 auto 2rem',
-      color: '#666',
+      color: 'rgba(255,255,255,0.9)',
       maxWidth: '800px',
+      textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
     },
     sectionTitle: {
       fontSize: '2rem',
@@ -293,7 +299,7 @@ function Community() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
             <button style={{...styles.btn, ...styles.btnPrimary, padding: '0.8rem 2rem'}}>Start a Discussion</button>
-            <button style={{...styles.btn, ...styles.btnOutline, padding: '0.8rem 2rem'}}>Browse All Communities</button>
+            <button style={{...styles.btn, ...styles.btnOutline, padding: '0.8rem 2rem', borderColor: 'white', color: 'white'}}>Browse All Communities</button>
           </div>
         </section>
 
