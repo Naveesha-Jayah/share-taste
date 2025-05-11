@@ -251,25 +251,6 @@ function Community() {
       padding: '3rem 2rem',
       textAlign: 'center',
       marginTop: 'auto',
-    },
-    footerLinks: {
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '2rem',
-      margin: '1.5rem 0',
-    },
-    footerLink: {
-      color: 'white',
-      textDecoration: 'none',
-      transition: 'color 0.2s ease',
-      ':hover': {
-        color: '#4ECDC4',
-      }
-    },
-    ctaButtons: {
-      display: 'flex',
-      gap: '1.5rem',
-      justifyContent: 'center',
     }
   };
 
@@ -457,14 +438,6 @@ function Community() {
         <div>
           <div style={{...styles.logo, fontSize: '2rem', marginBottom: '1rem'}}>
             Taste<span style={styles.logoSpan}>Share</span>
-          </div>
-          <div style={styles.footerLinks}>
-            <a href="/about" style={styles.footerLink}>About</a>
-            <a href="/contact" style={styles.footerLink}>Contact</a>
-            <a href="/privacy" style={styles.footerLink}>Privacy</a>
-            <a href="/terms" style={styles.footerLink}>Terms</a>
-            <a href="/blog" style={styles.footerLink}>Blog</a>
-            <a href="/faq" style={styles.footerLink}>FAQ</a>
           </div>
           <p style={{ marginTop: '1.5rem', opacity: 0.8 }}>
             © {new Date().getFullYear()} TasteShare. All rights reserved.
